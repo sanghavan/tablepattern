@@ -6,6 +6,7 @@
 //
 //
 
+#import "TableViewDataSourceRow.h"
 #import "TableViewDataSourceSection.h"
 
 @interface TableViewDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
@@ -13,8 +14,8 @@
 @property(nonatomic, strong) UIViewController *parentViewController;
 
 - (void)reloadDataInTableView:(UITableView *)tableView;
-- (void)childViewController:(UIViewController *)childViewController atIndexPath:(NSIndexPath *)indexPath;
-- (TableViewDataSourceSection *)createSectionInSection:(NSUInteger)section;
-- (TableViewDataSourceSection *)getSectionInSection:(NSUInteger)section;
+- (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section;
+- (TableViewDataSourceSection *)getDataSourceSectionInSection:(NSUInteger)section;
+- (TableViewDataSourceRow *)getDataSourceRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

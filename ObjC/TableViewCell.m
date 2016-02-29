@@ -12,6 +12,8 @@ static CGFloat const kHeight = 44.0f;
 
 @implementation TableViewCell
 
+@synthesize row = _row;
+
 - (instancetype)init {
     NSString *reuseIdentifier = NSStringFromClass(self.class);
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -21,13 +23,15 @@ static CGFloat const kHeight = 44.0f;
     return self;
 }
 
-#pragma mark - Static
+- (void)setupWithRow:(TableViewDataSourceRow *)row {
+    _row = row;
+}
 
-+ (CGFloat)heightWithModel:(TableViewCellModel *)model fromTableView:(UITableView *)tableView {
++ (CGFloat)heightWithRow:(TableViewDataSourceRow *)row inTableView:(UITableView *)tableView {
     return kHeight;
 }
 
-+ (instancetype)dequeueOrCreateReusableCellFromTableView:(UITableView *)tableView {
++ (instancetype)dequeueOrCreateReusableCellInTableView:(UITableView *)tableView {
     NSString *reuseIdentifier = NSStringFromClass(self.class);
     id cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {

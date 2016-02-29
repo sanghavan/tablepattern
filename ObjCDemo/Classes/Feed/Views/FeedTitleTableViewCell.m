@@ -8,8 +8,6 @@
 
 #import "FeedTitleTableViewCell.h"
 
-#import "FeedTitleTableViewCellModel.h"
-
 @interface FeedTitleTableViewCell ()
 
 @property(nonatomic, readonly) UILabel *label;
@@ -37,9 +35,9 @@
 
 #pragma mark - TableViewCell
 
-- (void)setModel:(FeedTitleTableViewCellModel *)model {
-    [super setModel:model];
-    [self.label setText:model.text];
+- (void)setupWithRow:(TableViewDataSourceRow *)row {
+    [super setupWithRow:row];
+    [self.label setText:row.model];
 }
 
 #pragma mark - Views

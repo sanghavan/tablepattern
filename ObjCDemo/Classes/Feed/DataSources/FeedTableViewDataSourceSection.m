@@ -8,9 +8,8 @@
 
 #import "FeedTableViewDataSourceSection.h"
 
-#import "DetailViewController.h"
 #import "FeedItem.h"
-#import "FeedTableViewCellModelFactory.h"
+#import "FeedTitleTableViewDataSourceRow.h"
 
 typedef NS_ENUM(NSUInteger, FeedRow) {
     FeedRowTitle,
@@ -24,21 +23,16 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
     return FeedRowCount;
 }
 
-- (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row {
+- (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row {
+    FeedItem *feedItem = (FeedItem *)self.model;
     switch ((FeedRow)row) {
         case FeedRowTitle:
-            return [FeedTableViewCellModelFactory createTitleCellModelFromItem:self.model];
+            return [[FeedTitleTableViewDataSourceRow alloc] initWithModel:feedItem.title];
         case FeedRowDesc:
-            return [FeedTableViewCellModelFactory createDescCellModelFromItem:self.model];
+            return [[FeedTitleTableViewDataSourceRow alloc] initWithModel:feedItem.desc];
         case FeedRowCount:
             return nil;
     }
-}
-
-- (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
-    FeedItem *feedItem = (FeedItem *)self.model;
-    DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:feedItem.title];
-    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

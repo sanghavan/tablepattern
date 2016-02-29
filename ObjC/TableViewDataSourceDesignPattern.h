@@ -7,8 +7,7 @@
 //
 
 #import "TableViewCell.h"
-#import "TableViewCellChildViewControllerProtocol.h"
-#import "TableViewCellModel.h"
 #import "TableViewController.h"
 #import "TableViewDataSource.h"
+#import "TableViewDataSourceRow.h"
 #import "TableViewDataSourceSection.h"

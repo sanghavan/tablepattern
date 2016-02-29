@@ -6,7 +6,9 @@
 //
 //
 
-#import "TableViewCellModel.h"
+#import <UIKit/UIKit.h>
+
+#import "TableViewDataSourceRow.h"
 
 @interface TableViewDataSourceSection : UIViewController
 
@@ -15,9 +17,11 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithModel:(id)model;
+- (void)setupRowsInTableView:(UITableView *)tableView;
 
 - (NSUInteger)numberOfRows;
-- (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row;
+- (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row;
+- (TableViewDataSourceRow *)getDataSourceRowAtRow:(NSUInteger)row;
 
 - (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
 - (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;

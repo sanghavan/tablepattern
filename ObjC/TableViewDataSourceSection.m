@@ -8,6 +8,12 @@
 
 #import "TableViewDataSourceSection.h"
 
+@interface TableViewDataSourceSection ()
+
+@property(nonatomic, strong) NSArray<TableViewDataSourceRow *> *rows;
+
+@end
+
 @implementation TableViewDataSourceSection
 
 - (instancetype)initWithModel:(id)model {
@@ -23,24 +29,31 @@
     return 0;
 }
 
-- (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row {
+- (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row {
     NSAssert(NO, @"need to be implemented by subclass");
     return nil;
 }
 
+#pragma mark - TableView
+
 - (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
-    // Do nothing...
+    TableViewDataSourceRow *dataSourceRow = [self getDataSourceRowAtRow:row];
+    [dataSourceRow didSelectCell:cell inTableView:tableView];
 }
 
 - (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
-    // Do nothing...
+    TableViewDataSourceRow *dataSourceRow = [self getDataSourceRowAtRow:row];
+    [dataSourceRow willDisplayCell:cell inTableView:tableView];
+    [self addChildViewController:dataSourceRow];
 }
 
 - (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
-    // Do nothing...
+    TableViewDataSourceRow *dataSourceRow = [self getDataSourceRowAtRow:row];
+    [dataSourceRow didEndDisplayingCell:cell inTableView:tableView];
+    [dataSourceRow removeFromParentViewController];
 }
 
-#pragma mark Header/Footer
+#pragma mark - Header/Footer
 
 - (CGFloat)headerHeightInTableView:(UITableView *)tableView {
     return 0.0f;
@@ -55,6 +68,26 @@
 }
 
 - (UIView *)footerViewInTableView:(UITableView *)tableView {
+    return nil;
+}
+
+#pragma mark - Helper
+
+- (void)setupRowsInTableView:(UITableView *)tableView {
+    NSMutableArray *rows = [NSMutableArray array];
+    for (int i = 0; i < [self numberOfRows]; i++) {
+        TableViewDataSourceRow *row = [self createDataSourceRowAtRow:i];
+        [row setIndex:i];
+        [rows addObject:row];
+    }
+    [self setRows:rows];
+}
+
+- (TableViewDataSourceRow *)getDataSourceRowAtRow:(NSUInteger)row {
+    if (row < [self.rows count]) {
+        return [self.rows objectAtIndex:row];
+    }
+    NSAssert(NO, @"did you forget to call [super reloadDataInTableView:]?");
     return nil;
 }
 

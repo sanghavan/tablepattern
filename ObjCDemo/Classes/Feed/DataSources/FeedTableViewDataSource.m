@@ -31,7 +31,7 @@
     [super reloadDataInTableView:tableView];
 }
 
-- (TableViewDataSourceSection *)createSectionInSection:(NSUInteger)section {
+- (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section {
     return [[FeedTableViewDataSourceSection alloc] initWithModel:[self.items objectAtIndex:section]];
 }
 
