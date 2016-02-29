@@ -25,12 +25,12 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 }
 
 - (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row {
-    switch (row) {
+    switch ((FeedRow)row) {
         case FeedRowTitle:
             return [FeedTableViewCellModelFactory createTitleCellModelFromItem:self.model];
         case FeedRowDesc:
             return [FeedTableViewCellModelFactory createDescCellModelFromItem:self.model];
-        default:
+        case FeedRowCount:
             return nil;
     }
 }
