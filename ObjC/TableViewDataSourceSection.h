@@ -8,17 +8,19 @@
 
 #import "TableViewCellModel.h"
 
-@interface TableViewDataSourceSection : NSObject
+@interface TableViewDataSourceSection : UIViewController
 
 @property(nonatomic, strong) id model;
+@property(nonatomic, assign) NSUInteger index;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithModel:(id)model;
 
 - (NSUInteger)numberOfRows;
 - (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row;
-- (void)didSelectRow:(NSUInteger)row
-         inTableView:(UITableView *)tableView
-    inViewController:(UIViewController *)viewController;
+
+- (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
+- (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
+- (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
 
 @end

@@ -12,13 +12,13 @@
 
 @implementation FeedTableViewCellModelFactory
 
-- (TableViewCellModel *)createTitleCellModelFromItem:(FeedItem *)item {
++ (TableViewCellModel *)createTitleCellModelFromItem:(FeedItem *)item {
     FeedTitleTableViewCellModel *cellModel = [[FeedTitleTableViewCellModel alloc] init];
     [cellModel setText:item.title];
     return cellModel;
 }
 
-- (TableViewCellModel *)createDescCellModelFromItem:(FeedItem *)item {
++ (TableViewCellModel *)createDescCellModelFromItem:(FeedItem *)item {
     FeedTitleTableViewCellModel *cellModel = [[FeedTitleTableViewCellModel alloc] init];
     [cellModel setText:item.desc];
     return cellModel;

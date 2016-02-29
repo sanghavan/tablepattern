@@ -20,6 +20,12 @@
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.navigationItem setTitle:@"Feed"];
+    [self.view setBackgroundColor:[UIColor lightGrayColor]];
+}
+
 + (FeedViewController *)sharedInstance {
     static dispatch_once_t onceToken;
     static FeedViewController *sharedInstance;

@@ -8,6 +8,8 @@
 
 #import "FeedTableViewDataSourceSection.h"
 
+#import "DetailViewController.h"
+#import "FeedItem.h"
 #import "FeedTableViewCellModelFactory.h"
 
 typedef NS_ENUM(NSUInteger, FeedRow) {
@@ -16,36 +18,27 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
     FeedRowCount,
 };
 
-@interface FeedTableViewDataSourceSection ()
-
-@property(nonatomic, readonly) FeedTableViewCellModelFactory *feedFactory;
-
-@end
-
 @implementation FeedTableViewDataSourceSection
-
-@synthesize feedFactory = _feedFactory;
-
-- (FeedTableViewCellModelFactory *)feedFactory {
-    if (!_feedFactory) {
-        _feedFactory = [[FeedTableViewCellModelFactory alloc] init];
-    }
-    return _feedFactory;
-}
 
 - (NSUInteger)numberOfRows {
     return FeedRowCount;
 }
 
-- (TableViewCellModel *)cellModelAtRow:(NSUInteger)row {
+- (TableViewCellModel *)createCellModelAtRow:(NSUInteger)row {
     switch (row) {
         case FeedRowTitle:
-            return [self.feedFactory createTitleCellModelFromItem:self.model];
+            return [FeedTableViewCellModelFactory createTitleCellModelFromItem:self.model];
         case FeedRowDesc:
-            return [self.feedFactory createDescCellModelFromItem:self.model];
+            return [FeedTableViewCellModelFactory createDescCellModelFromItem:self.model];
         default:
             return nil;
     }
+}
+
+- (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
+    FeedItem *feedItem = (FeedItem *)self.model;
+    DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:feedItem.title];
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

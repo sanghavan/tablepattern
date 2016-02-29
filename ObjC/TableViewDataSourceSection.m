@@ -28,9 +28,17 @@
     return nil;
 }
 
-- (void)didSelectRow:(NSUInteger)row
-         inTableView:(UITableView *)tableView
-    inViewController:(UIViewController *)viewController {
+- (void)didSelectCell:(UITableViewCell *)cell
+               forRow:(NSUInteger)row
+          inTableView:(UITableView *)tableView {
+    // Do nothing...
+}
+
+- (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
+    // Do nothing...
+}
+
+- (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
     // Do nothing...
 }
 

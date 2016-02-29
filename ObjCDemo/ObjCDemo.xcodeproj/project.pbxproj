@@ -14,6 +14,7 @@
 		C107386F1C6BBC0900689D61 /* FeedTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C107386E1C6BBC0900689D61 /* FeedTitleTableViewCell.m */; };
 		C10738721C6BBC1800689D61 /* FeedTitleTableViewCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C10738711C6BBC1800689D61 /* FeedTitleTableViewCellModel.m */; };
 		C10738751C6BBC3500689D61 /* FeedTableViewCellModelFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C10738741C6BBC3500689D61 /* FeedTableViewCellModelFactory.m */; };
+		C14BF9F01C84866C00D813EB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14BF9EF1C84866C00D813EB /* DetailViewController.m */; };
 		C19290391C6BBDAE00C6B651 /* FeedTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C19290381C6BBDAE00C6B651 /* FeedTableViewDataSource.m */; };
 		C192903D1C6BBE2C00C6B651 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C192903C1C6BBE2C00C6B651 /* FeedItem.m */; };
 		C19290471C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m in Sources */ = {isa = PBXBuildFile; fileRef = C19290461C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m */; };
@@ -34,6 +35,8 @@
 		C10738711C6BBC1800689D61 /* FeedTitleTableViewCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTitleTableViewCellModel.m; sourceTree = "<group>"; };
 		C10738731C6BBC3500689D61 /* FeedTableViewCellModelFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewCellModelFactory.h; sourceTree = "<group>"; };
 		C10738741C6BBC3500689D61 /* FeedTableViewCellModelFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewCellModelFactory.m; sourceTree = "<group>"; };
+		C14BF9EE1C84866C00D813EB /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		C14BF9EF1C84866C00D813EB /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		C19290371C6BBDAE00C6B651 /* FeedTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewDataSource.h; sourceTree = "<group>"; };
 		C19290381C6BBDAE00C6B651 /* FeedTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewDataSource.m; sourceTree = "<group>"; };
 		C192903B1C6BBE2C00C6B651 /* FeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 			children = (
 				C10738541C6BB48700689D61 /* FeedViewController.h */,
 				C10738551C6BB48700689D61 /* FeedViewController.m */,
+				C14BF9EE1C84866C00D813EB /* DetailViewController.h */,
+				C14BF9EF1C84866C00D813EB /* DetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				C10738751C6BBC3500689D61 /* FeedTableViewCellModelFactory.m in Sources */,
 				C10738721C6BBC1800689D61 /* FeedTitleTableViewCellModel.m in Sources */,
 				C19290391C6BBDAE00C6B651 /* FeedTableViewDataSource.m in Sources */,
+				C14BF9F01C84866C00D813EB /* DetailViewController.m in Sources */,
 				C107386F1C6BBC0900689D61 /* FeedTitleTableViewCell.m in Sources */,
 				C10738561C6BB48700689D61 /* FeedViewController.m in Sources */,
 				C10738531C6BB48700689D61 /* AppDelegate.m in Sources */,

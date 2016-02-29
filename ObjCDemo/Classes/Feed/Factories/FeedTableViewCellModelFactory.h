@@ -12,7 +12,7 @@
 
 @interface FeedTableViewCellModelFactory : NSObject
 
-- (TableViewCellModel *)createTitleCellModelFromItem:(FeedItem *)item;
-- (TableViewCellModel *)createDescCellModelFromItem:(FeedItem *)item;
++ (TableViewCellModel *)createTitleCellModelFromItem:(FeedItem *)item;
++ (TableViewCellModel *)createDescCellModelFromItem:(FeedItem *)item;
 
 @end

@@ -23,6 +23,10 @@
     [self setItems:@[
         [[FeedItem alloc] initWithTitle:@"Carrot" desc:@"An orange vegetable"],
         [[FeedItem alloc] initWithTitle:@"Tomato" desc:@"A red vegetable"],
+        [[FeedItem alloc] initWithTitle:@"Cucumber" desc:@"A green vegetable"],
+        [[FeedItem alloc] initWithTitle:@"Orange" desc:@"An orange fruit"],
+        [[FeedItem alloc] initWithTitle:@"Apple" desc:@"An red/green fruit"],
+        [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
     ]];
     [super reloadDataInTableView:tableView];
 }
