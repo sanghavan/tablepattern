@@ -12,11 +12,11 @@
 
 @interface TableViewDataSourceRow : UIViewController
 
-@property(nonatomic, strong) id model;
+@property(nonatomic, strong) id object;
 @property(nonatomic, assign) NSUInteger index;
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithModel:(id)model;
+- (instancetype)initWithObject:(id)object;
 
 - (void)didSelectCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
 - (void)willDisplayCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;

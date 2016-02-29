@@ -32,7 +32,7 @@
 }
 
 - (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section {
-    return [[FeedTableViewDataSourceSection alloc] initWithModel:[self.items objectAtIndex:section]];
+    return [[FeedTableViewDataSourceSection alloc] initWithObject:[self.items objectAtIndex:section]];
 }
 
 #pragma mark - UITableViewDataSource

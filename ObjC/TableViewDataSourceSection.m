@@ -16,10 +16,10 @@
 
 @implementation TableViewDataSourceSection
 
-- (instancetype)initWithModel:(id)model {
+- (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
-        [self setModel:model];
+        [self setObject:object];
     }
     return self;
 }

@@ -80,7 +80,7 @@ static CGFloat const kPadding = 10.0f;
 
 - (void)setupWithRow:(TableViewDataSourceRow *)row {
     [super setupWithRow:row];
-    [self.label setText:row.model];
+    [self.label setText:row.object];
 }
 
 @end

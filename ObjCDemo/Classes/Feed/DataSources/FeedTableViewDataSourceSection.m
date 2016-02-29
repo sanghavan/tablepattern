@@ -24,12 +24,12 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 }
 
 - (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row {
-    FeedItem *feedItem = (FeedItem *)self.model;
+    FeedItem *feedItem = (FeedItem *)self.object;
     switch ((FeedRow)row) {
         case FeedRowTitle:
-            return [[FeedTitleTableViewDataSourceRow alloc] initWithModel:feedItem.title];
+            return [[FeedTitleTableViewDataSourceRow alloc] initWithObject:feedItem.title];
         case FeedRowDesc:
-            return [[FeedTitleTableViewDataSourceRow alloc] initWithModel:feedItem.desc];
+            return [[FeedTitleTableViewDataSourceRow alloc] initWithObject:feedItem.desc];
         case FeedRowCount:
             return nil;
     }
