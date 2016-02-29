@@ -28,9 +28,7 @@
     return nil;
 }
 
-- (void)didSelectCell:(UITableViewCell *)cell
-               forRow:(NSUInteger)row
-          inTableView:(UITableView *)tableView {
+- (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
     // Do nothing...
 }
 
@@ -40,6 +38,24 @@
 
 - (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView {
     // Do nothing...
+}
+
+#pragma mark Header/Footer
+
+- (CGFloat)headerHeightInTableView:(UITableView *)tableView {
+    return 0.0f;
+}
+
+- (UIView *)headerViewInTableView:(UITableView *)tableView {
+    return nil;
+}
+
+- (CGFloat)footerHeightInTableView:(UITableView *)tableView {
+    return 0.0f;
+}
+
+- (UIView *)footerViewInTableView:(UITableView *)tableView {
+    return nil;
 }
 
 @end

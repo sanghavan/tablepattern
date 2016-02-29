@@ -23,4 +23,9 @@
 - (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
 - (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
 
+- (CGFloat)headerHeightInTableView:(UITableView *)tableView;
+- (UIView *)headerViewInTableView:(UITableView *)tableView;
+- (CGFloat)footerHeightInTableView:(UITableView *)tableView;
+- (UIView *)footerViewInTableView:(UITableView *)tableView;
+
 @end

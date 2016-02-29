@@ -110,6 +110,28 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [section didSelectCell:cell forRow:indexPath.row inTableView:tableView];
 }
 
+#pragma mark Header/Footer
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    TableViewDataSourceSection *dataSourceSection = [self getSectionInSection:section];
+    return [dataSourceSection headerHeightInTableView:tableView];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TableViewDataSourceSection *dataSourceSection = [self getSectionInSection:section];
+    return [dataSourceSection headerViewInTableView:tableView];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    TableViewDataSourceSection *dataSourceSection = [self getSectionInSection:section];
+    return [dataSourceSection footerHeightInTableView:tableView];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    TableViewDataSourceSection *dataSourceSection = [self getSectionInSection:section];
+    return [dataSourceSection footerViewInTableView:tableView];
+}
+
 #pragma mark - Helper
 
 - (void)setupSectionsInTableView:(UITableView *)tableView {
