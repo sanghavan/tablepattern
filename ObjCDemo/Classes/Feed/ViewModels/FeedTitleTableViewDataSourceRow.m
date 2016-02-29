@@ -17,4 +17,12 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
+- (void)alert {
+    [[[UIAlertView alloc] initWithTitle:self.model
+                                message:nil
+                               delegate:nil
+                      cancelButtonTitle:@"Ok"
+                      otherButtonTitles:nil] show];
+}
+
 @end

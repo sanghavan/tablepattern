@@ -10,4 +10,6 @@
 
 @interface FeedTitleTableViewDataSourceRow : TableViewDataSourceRow
 
+- (void)alert;
+
 @end
