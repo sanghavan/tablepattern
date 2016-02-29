@@ -19,6 +19,8 @@
 - (instancetype)initWithObject:(id)object;
 - (void)setupRowsInTableView:(UITableView *)tableView;
 
+- (Class)objectClass;
+
 - (NSUInteger)numberOfRows;
 - (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row;
 - (TableViewDataSourceRow *)getDataSourceRowAtRow:(NSUInteger)row;

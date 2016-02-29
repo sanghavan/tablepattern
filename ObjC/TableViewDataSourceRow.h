@@ -18,11 +18,13 @@
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
 
+- (Class)cellClass;
+- (Class)objectClass;
+
 - (void)didSelectCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
 - (void)willDisplayCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
 - (void)didEndDisplayingCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
 
-- (Class)cellClass;
 - (CGFloat)heightInTableView:(UITableView *)tableView;
 - (TableViewCell *)dequeueOrCreateReusableCellInTableView:(UITableView *)tableView;
 

@@ -19,6 +19,10 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 
 @implementation FeedTableViewDataSourceSection
 
+- (Class)objectClass {
+    return [FeedItem class];
+}
+
 - (NSUInteger)numberOfRows {
     return FeedRowCount;
 }

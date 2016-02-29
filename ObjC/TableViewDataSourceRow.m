@@ -15,9 +15,21 @@
 - (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
+        NSAssert([object isKindOfClass:self.objectClass], @"object need to be of class %@", self.objectClass);
         [self setObject:object];
     }
     return self;
+}
+
+- (Class)cellClass {
+    NSString *className = NSStringFromClass([self class]);
+    className = [className stringByReplacingOccurrencesOfString:@"DataSourceRow" withString:@"Cell"];
+    return NSClassFromString(className);
+}
+
+- (Class)objectClass {
+    NSAssert(NO, @"need to be implemented by subclass");
+    return nil;
 }
 
 #pragma mark - TableView
@@ -35,12 +47,6 @@
 }
 
 #pragma mark - TableViewCell
-
-- (Class)cellClass {
-    NSString *className = NSStringFromClass([self class]);
-    className = [className stringByReplacingOccurrencesOfString:@"DataSourceRow" withString:@"Cell"];
-    return NSClassFromString(className);
-}
 
 - (CGFloat)heightInTableView:(UITableView *)tableView {
     NSAssert([self.cellClass isSubclassOfClass:[TableViewCell class]],

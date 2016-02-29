@@ -19,9 +19,15 @@
 - (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
+        NSAssert([object isKindOfClass:self.objectClass], @"object need to be of class %@", self.objectClass);
         [self setObject:object];
     }
     return self;
+}
+
+- (Class)objectClass {
+    NSAssert(NO, @"need to be implemented by subclass");
+    return nil;
 }
 
 - (NSUInteger)numberOfRows {

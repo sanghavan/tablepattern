@@ -12,13 +12,17 @@
 
 @implementation FeedTitleTableViewDataSourceRow
 
+- (Class)objectClass {
+    return [NSString class];
+}
+
 - (void)didSelectCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
-    DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:self.model];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:self.object];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void)alert {
-    [[[UIAlertView alloc] initWithTitle:self.model
+    [[[UIAlertView alloc] initWithTitle:self.object
                                 message:nil
                                delegate:nil
                       cancelButtonTitle:@"Ok"
