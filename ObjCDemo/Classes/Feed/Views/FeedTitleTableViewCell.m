@@ -53,8 +53,8 @@ static CGFloat const kPadding = 10.0f;
 #pragma mark - Action
 
 - (void)action {
-    FeedTitleTableViewDataSourceRow *row = (FeedTitleTableViewDataSourceRow *)self.row;
-    [row alert];
+    FeedTitleTableViewDataSourceRow *dataSourceRow = (FeedTitleTableViewDataSourceRow *)self.dataSourceRow;
+    [dataSourceRow alert];
 }
 
 #pragma mark - Views
@@ -78,9 +78,9 @@ static CGFloat const kPadding = 10.0f;
 
 #pragma mark - TableViewCell
 
-- (void)setupWithRow:(TableViewDataSourceRow *)row {
-    [super setupWithRow:row];
-    [self.label setText:row.object];
+- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow {
+    [super setupWithDataSourceRow:dataSourceRow];
+    [self.label setText:dataSourceRow.object];
 }
 
 @end

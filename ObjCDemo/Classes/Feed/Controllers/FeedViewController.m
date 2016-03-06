@@ -15,7 +15,10 @@
 - (instancetype)initWithTableViewStyle:(UITableViewStyle)style {
     self = [super initWithTableViewStyle:style];
     if (self) {
-        [self setDataSource:[[FeedTableViewDataSource alloc] init]];
+        FeedTableViewDataSource *dataSource = [[FeedTableViewDataSource alloc] init];
+        [dataSource setPaginationLimit:2];
+        [dataSource setEnablePagination:YES];
+        [self setTableViewDataSource:dataSource];
     }
     return self;
 }

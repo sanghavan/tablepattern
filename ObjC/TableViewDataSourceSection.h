@@ -8,30 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TableViewDataSourceRow.h"
+@class TableViewDataSource, TableViewDataSourceRow;
 
 @interface TableViewDataSourceSection : UIViewController
 
 @property(nonatomic, strong) id object;
-@property(nonatomic, assign) NSUInteger index;
+@property(nonatomic, assign) NSUInteger section;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
-- (void)setupRowsInTableView:(UITableView *)tableView;
 
 - (Class)objectClass;
 
 - (NSUInteger)numberOfRows;
 - (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row;
 - (TableViewDataSourceRow *)getDataSourceRowAtRow:(NSUInteger)row;
+- (void)reloadDataSourceRowAtRow:(NSUInteger)row
+                    inDataSource:(TableViewDataSource *)dataSource
+                withRowAnimation:(UITableViewRowAnimation)animation;
 
-- (void)didSelectCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
-- (void)willDisplayCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
-- (void)didEndDisplayingCell:(UITableViewCell *)cell forRow:(NSUInteger)row inTableView:(UITableView *)tableView;
-
-- (CGFloat)headerHeightInTableView:(UITableView *)tableView;
-- (UIView *)headerViewInTableView:(UITableView *)tableView;
-- (CGFloat)footerHeightInTableView:(UITableView *)tableView;
-- (UIView *)footerViewInTableView:(UITableView *)tableView;
+- (CGFloat)headerHeightInDataSource:(TableViewDataSource *)dataSource;
+- (UIView *)headerViewInDataSource:(TableViewDataSource *)dataSource;
+- (CGFloat)footerHeightInDataSource:(TableViewDataSource *)dataSource;
+- (UIView *)footerViewInDataSource:(TableViewDataSource *)dataSource;
 
 @end

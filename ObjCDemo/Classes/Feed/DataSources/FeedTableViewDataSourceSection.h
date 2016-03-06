@@ -10,4 +10,6 @@
 
 @interface FeedTableViewDataSourceSection : TableViewDataSourceSection
 
+- (void)toggleHideDescriptionInDataSource:(TableViewDataSource *)dataSource;
+
 @end

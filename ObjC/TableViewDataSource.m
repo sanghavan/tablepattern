@@ -9,28 +9,73 @@
 #import "TableViewDataSource.h"
 
 #import "TableViewCell.h"
+#define weaken(object, newName) __typeof__(object) __weak newName = object
+
+static NSUInteger const kPaginationPageDefault = 1;
+static NSUInteger const kPaginationPageDisabled = 0;
 
 static NSString *const kEmptyCellReuseIdentifier;
 
 @interface TableViewDataSource ()
 
-@property(nonatomic, strong) NSArray<TableViewDataSourceSection *> *sections;
+@property(nonatomic, strong) NSArray<TableViewDataSourceSection *> *dataSourceSections;
+@property(nonatomic, assign) NSUInteger paginationPage;
 
 @end
 
 @implementation TableViewDataSource
 
-- (void)reloadDataInTableView:(UITableView *)tableView {
-    [self setupSectionsInTableView:tableView];
-    [tableView reloadData];
+- (UITableView *)tableView {
+    return self.tableViewController.tableView;
 }
 
-- (void)childViewController:(UIViewController *)childViewController atIndexPath:(NSIndexPath *)indexPath {
-    // Do nothing...
+#pragma mark - TableViewDataSource
+
+- (void)resetData {
+    [self setPaginationPage:self.isPaginationEnabled ? kPaginationPageDefault : kPaginationPageDisabled];
+    [self reloadData];
+}
+
+- (void)reloadData {
+    weaken(self, weakSelf);
+    if (self.isPaginationEnabled) {
+        NSAssert(self.paginationLimit > 0,
+                 @"TableViewDataSource: reloadData: need to specify paginationLimit if you're going to use pagination");
+        [self loadPaginatedDataInPage:self.paginationPage
+                            withLimit:self.paginationLimit
+                         onCompletion:^(BOOL hasMore) {
+                           [weakSelf setPaginationPage:hasMore ? weakSelf.paginationPage + 1 : kPaginationPageDisabled];
+                           [weakSelf setupData];
+                         }];
+    } else {
+        [self loadDataOnCompletion:^{
+          [weakSelf setupData];
+        }];
+    }
+}
+
+- (void)setupData {
+    [self setupSections];
+    [self.tableView reloadData];
+}
+
+- (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
+    NSAssert(NO, @"TableViewDataSource: loadData: need to be implemented by subclass");
+}
+
+- (void)loadPaginatedDataInPage:(NSUInteger)page
+                      withLimit:(NSUInteger)limit
+                   onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
+    NSAssert(NO, @"TableViewDataSource: loadPaginatedData: need to be implemented by subclass");
+}
+
+- (NSInteger)numberOfSections {
+    NSAssert(NO, @"TableViewDataSource: numberOfSections: need to be implemented by subclass");
+    return 0;
 }
 
 - (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section {
-    NSAssert(NO, @"need to be implemented by subclass");
+    NSAssert(NO, @"TableViewDataSource: createDataSourceSectionInSection: need to be implemented by subclass");
     return nil;
 }
 
@@ -41,14 +86,14 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSAssert(NO, @"need to be implemented by subclass");
-    return 0;
+    return [self numberOfSections];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewDataSourceRow *dataSourceRow = [self getDataSourceRowAtIndexPath:indexPath];
+    TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:indexPath.section];
+    TableViewDataSourceRow *dataSourceRow = [dataSourceSection getDataSourceRowAtRow:indexPath.row];
     if (dataSourceRow) {
-        return [dataSourceRow dequeueOrCreateReusableCellInTableView:tableView];
+        return [dataSourceRow dequeueOrCreateReusableCellInDataSourceSection:dataSourceSection inDataSource:self];
     }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellReuseIdentifier];
     if (cell == nil) {
@@ -61,36 +106,55 @@ static NSString *const kEmptyCellReuseIdentifier;
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewDataSourceRow *dataSourceRow = [self getDataSourceRowAtIndexPath:indexPath];
+    TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:indexPath.section];
+    TableViewDataSourceRow *dataSourceRow = [dataSourceSection getDataSourceRowAtRow:indexPath.row];
     if (dataSourceRow) {
-        return [dataSourceRow heightInTableView:tableView];
+        return [dataSourceRow heightInDataSourceSection:dataSourceSection inDataSource:self];
     }
     return 0.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    TableViewDataSourceSection *section = [self getDataSourceSectionInSection:indexPath.section];
-    [section didSelectCell:cell forRow:indexPath.row inTableView:tableView];
+    TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:indexPath.section];
+    TableViewDataSourceRow *dataSourceRow = [dataSourceSection getDataSourceRowAtRow:indexPath.row];
+    if (dataSourceRow) {
+        [dataSourceRow didSelectCell:(TableViewCell *)cell inDataSourceSection:dataSourceSection inDataSource:self];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewDataSourceSection *section = [self getDataSourceSectionInSection:indexPath.section];
-    [section willDisplayCell:cell forRow:indexPath.row inTableView:tableView];
-    [self.parentViewController addChildViewController:section];
+    TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:indexPath.section];
+    TableViewDataSourceRow *dataSourceRow = [dataSourceSection getDataSourceRowAtRow:indexPath.row];
+    if (dataSourceRow) {
+        [dataSourceRow willDisplayCell:(TableViewCell *)cell inDataSourceSection:dataSourceSection inDataSource:self];
+        [self.tableViewController addChildViewController:dataSourceSection];
+        [self.tableViewController addChildViewController:dataSourceRow];
+    }
+
+    if (indexPath.section == [self numberOfSections] - 1 && indexPath.row == [dataSourceSection numberOfRows] - 1 &&
+        self.paginationPage != kPaginationPageDisabled) {
+        [self reloadData];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView
     didEndDisplayingCell:(UITableViewCell *)cell
        forRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewDataSourceSection *section = [self getDataSourceSectionInSection:indexPath.section];
-    [section didEndDisplayingCell:cell forRow:indexPath.row inTableView:tableView];
+    TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:indexPath.section];
+    TableViewDataSourceRow *dataSourceRow = [dataSourceSection getDataSourceRowAtRow:indexPath.row];
+    if (dataSourceRow) {
+        [dataSourceRow didEndDisplayingCell:(TableViewCell *)cell
+                        inDataSourceSection:dataSourceSection
+                               inDataSource:self];
+        [dataSourceRow removeFromParentViewController];
 
-    NSArray<NSNumber *> *visibleIndexPaths = [tableView.indexPathsForVisibleRows valueForKey:@"section"];
-    if (![visibleIndexPaths containsObject:@(indexPath.section)]) {
-        [section removeFromParentViewController];
+        NSArray<NSNumber *> *visibleIndexPaths = [tableView.indexPathsForVisibleRows valueForKey:@"section"];
+        if (![visibleIndexPaths containsObject:@(indexPath.section)]) {
+            [dataSourceSection removeFromParentViewController];
+        }
     }
 }
 
@@ -98,42 +162,40 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:section];
-    return [dataSourceSection headerHeightInTableView:tableView];
+    return [dataSourceSection headerHeightInDataSource:self];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:section];
-    return [dataSourceSection headerViewInTableView:tableView];
+    return [dataSourceSection headerViewInDataSource:self];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:section];
-    return [dataSourceSection footerHeightInTableView:tableView];
+    return [dataSourceSection footerHeightInDataSource:self];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     TableViewDataSourceSection *dataSourceSection = [self getDataSourceSectionInSection:section];
-    return [dataSourceSection footerViewInTableView:tableView];
+    return [dataSourceSection footerViewInDataSource:self];
 }
 
 #pragma mark - Helper
 
-- (void)setupSectionsInTableView:(UITableView *)tableView {
-    NSMutableArray *sections = [NSMutableArray array];
-    for (int i = 0; i < [self numberOfSectionsInTableView:tableView]; i++) {
-        TableViewDataSourceSection *section = [self createDataSourceSectionInSection:i];
-        [section setupRowsInTableView:tableView];
-        [section setIndex:i];
-        [sections addObject:section];
+- (void)setupSections {
+    NSMutableArray *dataSourceSections = [NSMutableArray array];
+    for (int section = 0; section < [self numberOfSections]; section++) {
+        TableViewDataSourceSection *dataSourceSection = [self createDataSourceSectionInSection:section];
+        [dataSourceSection setSection:section];
+        [dataSourceSections addObject:dataSourceSection];
     }
-    [self setSections:sections];
+    [self setDataSourceSections:dataSourceSections];
 }
 
 - (TableViewDataSourceSection *)getDataSourceSectionInSection:(NSUInteger)section {
-    if (section < [self.sections count]) {
-        return [self.sections objectAtIndex:section];
+    if (section < [self.dataSourceSections count]) {
+        return [self.dataSourceSections objectAtIndex:section];
     }
-    NSAssert(NO, @"did you forget to call [super reloadDataInTableView:]?");
     return nil;
 }
 

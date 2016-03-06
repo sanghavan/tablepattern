@@ -16,7 +16,9 @@
     return [NSString class];
 }
 
-- (void)didSelectCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
+- (void)didSelectCell:(UITableViewCell *)cell
+  inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+         inDataSource:(TableViewDataSource *)dataSource {
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:self.object];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }

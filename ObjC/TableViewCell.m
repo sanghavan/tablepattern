@@ -12,8 +12,6 @@ static CGFloat const kHeight = 44.0f;
 
 @implementation TableViewCell
 
-@synthesize row = _row;
-
 - (instancetype)init {
     NSString *reuseIdentifier = NSStringFromClass(self.class);
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -23,17 +21,42 @@ static CGFloat const kHeight = 44.0f;
     return self;
 }
 
-- (void)setupWithRow:(TableViewDataSourceRow *)row {
-    _row = row;
+- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow {
+    // Do nothing...
 }
 
-+ (CGFloat)heightWithRow:(TableViewDataSourceRow *)row inTableView:(UITableView *)tableView {
+- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
+           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection {
+    return [self setupWithDataSourceRow:dataSourceRow];
+}
+
+- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
+           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                  inDataSource:(TableViewDataSource *)dataSource {
+    _dataSource = dataSource;
+    _dataSourceRow = dataSourceRow;
+    _dataSourceRowSection = dataSourceSection;
+    return [self setupWithDataSourceRow:dataSourceRow inDataSourceSection:dataSourceSection];
+}
+
++ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow {
     return kHeight;
 }
 
-+ (instancetype)dequeueOrCreateReusableCellInTableView:(UITableView *)tableView {
++ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
+               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection {
+    return [self heightWithDataSourceRow:dataSourceRow];
+}
+
++ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
+               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                      inDataSource:(TableViewDataSource *)dataSource {
+    return [self heightWithDataSourceRow:dataSourceRow inDataSourceSection:dataSourceSection];
+}
+
++ (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource {
     NSString *reuseIdentifier = NSStringFromClass(self.class);
-    id cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    id cell = [dataSource.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {
         cell = [[[self class] alloc] init];
     }

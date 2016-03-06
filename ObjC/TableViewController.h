@@ -10,10 +10,11 @@
 @interface TableViewController : UIViewController
 
 @property(nonatomic, readonly) UITableView *tableView;
-@property(nonatomic, strong) TableViewDataSource *dataSource;
-@property(nonatomic, assign) UITableViewStyle style;
+@property(nonatomic, strong) TableViewDataSource *tableViewDataSource;
+@property(nonatomic, assign) UITableViewStyle tableViewStyle;
 
-- (instancetype)initWithTableViewStyle:(UITableViewStyle)style;
+- (instancetype)initWithTableViewStyle:(UITableViewStyle)tableViewStyle;
+- (void)resetData;
 - (void)reloadData;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

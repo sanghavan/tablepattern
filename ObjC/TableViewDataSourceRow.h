@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class TableViewCell;
+@class TableViewCell, TableViewDataSource, TableViewDataSourceSection;
 
 @interface TableViewDataSourceRow : UIViewController
 
 @property(nonatomic, strong) id object;
-@property(nonatomic, assign) NSUInteger index;
+@property(nonatomic, assign) NSUInteger row;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
@@ -21,11 +21,22 @@
 - (Class)cellClass;
 - (Class)objectClass;
 
-- (void)didSelectCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
-- (void)willDisplayCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
-- (void)didEndDisplayingCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView;
+- (void)didSelectCell:(TableViewCell *)cell
+  inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+         inDataSource:(TableViewDataSource *)dataSource;
+- (void)willDisplayCell:(TableViewCell *)cell
+    inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+           inDataSource:(TableViewDataSource *)dataSource;
+- (void)didEndDisplayingCell:(TableViewCell *)cell
+         inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                inDataSource:(TableViewDataSource *)dataSource;
+- (void)reloadInDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                     inDataSource:(TableViewDataSource *)dataSource
+                 withRowAnimation:(UITableViewRowAnimation)animation;
 
-- (CGFloat)heightInTableView:(UITableView *)tableView;
-- (TableViewCell *)dequeueOrCreateReusableCellInTableView:(UITableView *)tableView;
+- (CGFloat)heightInDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                        inDataSource:(TableViewDataSource *)dataSource;
+- (TableViewCell *)dequeueOrCreateReusableCellInDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+                                                     inDataSource:(TableViewDataSource *)dataSource;
 
 @end
