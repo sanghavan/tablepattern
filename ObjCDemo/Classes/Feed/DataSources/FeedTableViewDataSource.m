@@ -19,6 +19,15 @@
 
 @implementation FeedTableViewDataSource
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self setEnablePagination:YES];
+        [self setPaginationLimit:2];
+    }
+    return self;
+}
+
 - (void)resetData {
     [self setItems:@[]];
     [super resetData];
