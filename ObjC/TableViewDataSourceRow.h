@@ -17,7 +17,6 @@
 @property(nonatomic, readonly) Class cellClass;
 @property(nonatomic, readonly) Class objectClass;
 
-- (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
 
 - (void)didSelectCell:(TableViewCell *)cell
@@ -37,5 +36,9 @@
                         inDataSource:(TableViewDataSource *)dataSource;
 - (TableViewCell *)dequeueOrCreateReusableCellInDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
                                                      inDataSource:(TableViewDataSource *)dataSource;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 @end

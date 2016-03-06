@@ -17,7 +17,6 @@
 @property(nonatomic, readonly) NSInteger numberOfRows;
 @property(nonatomic, readonly) Class objectClass;
 
-- (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
 
 - (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row;
@@ -30,5 +29,9 @@
 - (UIView *)headerViewInDataSource:(TableViewDataSource *)dataSource;
 - (CGFloat)footerHeightInDataSource:(TableViewDataSource *)dataSource;
 - (UIView *)footerViewInDataSource:(TableViewDataSource *)dataSource;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 @end
