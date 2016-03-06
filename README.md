@@ -17,15 +17,13 @@ pattern.
 
 ### TableViewController
 
-- Need to be subclassed
-- Need to set in init:
+  - *Need to be subclassed*
   - `dataSource`
     - Create an instance of a subclassed `TableViewDataSource`
 
 ### TableViewDataSource
 
-- Need to be subclassed
-- Need to override:
+  - *Need to be subclassed*
   - `numberOfSections`
     - Return the number of sections that your table view contains.
   - `- loadDataOnCompletion:`
@@ -43,8 +41,7 @@ pattern.
 
 ### TableViewDataSourceSection
 
-- Need to be subclassed
-- Need to override:
+  - *Need to be subclassed*
   - `objectClass`
     - What is the class if the `id` object stored by the section.
   - `- numberOfRows`
@@ -55,12 +52,11 @@ pattern.
 
 ### TableViewDataSourceRow
 
-- Need to be subclassed
-- Need to override:
+  - *Need to be subclassed*
   - `objectClass`
     - What is the class if the `id` object stored by the row.
 
 ### TableViewCell
 
-- Need to be subclassed
+  - *Need to be subclassed*
 
