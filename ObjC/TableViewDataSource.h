@@ -22,6 +22,7 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
 @property(nonatomic, strong) UIViewController<TableViewDataSourceParentViewController> *tableViewController;
 @property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign) NSUInteger paginationLimit;
+@property(nonatomic, readonly) NSInteger numberOfSections;
 
 - (void)resetData;
 - (void)reloadData;
@@ -30,7 +31,6 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
                       withLimit:(NSUInteger)limit
                    onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion;
 
-- (NSInteger)numberOfSections;
 - (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section;
 - (TableViewDataSourceSection *)getDataSourceSectionInSection:(NSUInteger)section;
 - (TableViewDataSourceRow *)getDataSourceRowAtIndexPath:(NSIndexPath *)indexPath;

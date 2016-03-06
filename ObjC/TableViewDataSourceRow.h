@@ -14,12 +14,11 @@
 
 @property(nonatomic, strong) id object;
 @property(nonatomic, assign) NSUInteger row;
+@property(nonatomic, readonly) Class cellClass;
+@property(nonatomic, readonly) Class objectClass;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
-
-- (Class)cellClass;
-- (Class)objectClass;
 
 - (void)didSelectCell:(TableViewCell *)cell
   inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection

@@ -14,13 +14,12 @@
 
 @property(nonatomic, strong) id object;
 @property(nonatomic, assign) NSUInteger section;
+@property(nonatomic, readonly) NSInteger numberOfRows;
+@property(nonatomic, readonly) Class objectClass;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithObject:(id)object;
 
-- (Class)objectClass;
-
-- (NSUInteger)numberOfRows;
 - (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row;
 - (TableViewDataSourceRow *)getDataSourceRowAtRow:(NSUInteger)row;
 - (void)reloadDataSourceRowAtRow:(NSUInteger)row
