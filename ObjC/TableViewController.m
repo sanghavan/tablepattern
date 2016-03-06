@@ -17,7 +17,7 @@
 @implementation TableViewController
 
 @synthesize tableView = _tableView;
-@synthesize tableViewDataSource = _tableViewDataSource;
+@synthesize dataSource = _dataSource;
 
 - (instancetype)init {
     return [self initWithTableViewStyle:UITableViewStylePlain];
@@ -41,11 +41,11 @@
     _tableView = nil;
 }
 
-- (void)setTableViewDataSource:(TableViewDataSource *)tableViewDataSource {
-    _tableViewDataSource = tableViewDataSource;
-    [_tableViewDataSource setTableViewController:self];
-    [self.tableView setDataSource:_tableViewDataSource];
-    [self.tableView setDelegate:_tableViewDataSource];
+- (void)setTableViewDataSource:(TableViewDataSource *)dataSource {
+    _dataSource = dataSource;
+    [_dataSource setTableViewController:self];
+    [self.tableView setDataSource:_dataSource];
+    [self.tableView setDelegate:_dataSource];
 }
 
 #pragma mark - View life cycle
@@ -73,11 +73,11 @@
 #pragma mark - Action
 
 - (void)resetData {
-    [self.tableViewDataSource resetData];
+    [self.dataSource resetData];
 }
 
 - (void)reloadData {
-    [self.tableViewDataSource reloadData];
+    [self.dataSource reloadData];
 }
 
 #pragma mark - Views
