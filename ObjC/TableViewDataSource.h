@@ -6,8 +6,8 @@
 //
 //
 
-#import "TableViewDataSourceRow.h"
-#import "TableViewDataSourceSection.h"
+#import "TableViewRow.h"
+#import "TableViewSection.h"
 
 typedef void (^TableViewDataSourceLoadPaginatedDataCompletion)(BOOL hasMore);
 typedef void (^TableViewDataSourceLoadDataCompletion)();
@@ -22,7 +22,7 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
 @property(nonatomic, strong) UIViewController<TableViewDataSourceParentViewController> *tableViewController;
 @property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign) NSUInteger paginationLimit;
-@property(nonatomic, readonly) NSInteger numberOfSections;
+@property(nonatomic, readonly) NSUInteger numberOfSections;
 
 - (void)resetData;
 - (void)reloadData;
@@ -31,8 +31,8 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
                       withLimit:(NSUInteger)limit
                    onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion;
 
-- (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section;
-- (TableViewDataSourceSection *)getDataSourceSectionInSection:(NSUInteger)section;
-- (TableViewDataSourceRow *)getDataSourceRowAtIndexPath:(NSIndexPath *)indexPath;
+- (TableViewSection *)createSectionInSection:(NSUInteger)section;
+- (TableViewSection *)getSectionInSection:(NSUInteger)section;
+- (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

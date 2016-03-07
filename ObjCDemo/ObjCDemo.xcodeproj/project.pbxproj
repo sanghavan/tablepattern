@@ -12,12 +12,12 @@
 		C10738531C6BB48700689D61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C10738521C6BB48700689D61 /* AppDelegate.m */; };
 		C10738561C6BB48700689D61 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10738551C6BB48700689D61 /* FeedViewController.m */; };
 		C107386F1C6BBC0900689D61 /* FeedTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C107386E1C6BBC0900689D61 /* FeedTitleTableViewCell.m */; };
-		C1306DF01C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.m in Sources */ = {isa = PBXBuildFile; fileRef = C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.m */; };
+		C1306DF01C8C6C77000B7DD2 /* FeedButtonTableViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewRow.m */; };
 		C14BF9F01C84866C00D813EB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14BF9EF1C84866C00D813EB /* DetailViewController.m */; };
-		C14BF9F61C8497A500D813EB /* FeedTitleTableViewDataSourceRow.m in Sources */ = {isa = PBXBuildFile; fileRef = C14BF9F51C8497A500D813EB /* FeedTitleTableViewDataSourceRow.m */; };
+		C14BF9F61C8497A500D813EB /* FeedTitleTableViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = C14BF9F51C8497A500D813EB /* FeedTitleTableViewRow.m */; };
 		C19290391C6BBDAE00C6B651 /* FeedTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C19290381C6BBDAE00C6B651 /* FeedTableViewDataSource.m */; };
 		C192903D1C6BBE2C00C6B651 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C192903C1C6BBE2C00C6B651 /* FeedItem.m */; };
-		C19290471C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m in Sources */ = {isa = PBXBuildFile; fileRef = C19290461C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m */; };
+		C19290471C6BC2DB00C6B651 /* FeedTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = C19290461C6BC2DB00C6B651 /* FeedTableViewSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,18 +31,18 @@
 		C107385F1C6BB48700689D61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C107386D1C6BBC0900689D61 /* FeedTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTitleTableViewCell.h; sourceTree = "<group>"; };
 		C107386E1C6BBC0900689D61 /* FeedTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTitleTableViewCell.m; sourceTree = "<group>"; };
-		C1306DEE1C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedButtonTableViewDataSourceRow.h; sourceTree = "<group>"; };
-		C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedButtonTableViewDataSourceRow.m; sourceTree = "<group>"; };
+		C1306DEE1C8C6C77000B7DD2 /* FeedButtonTableViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedButtonTableViewRow.h; sourceTree = "<group>"; };
+		C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedButtonTableViewRow.m; sourceTree = "<group>"; };
 		C14BF9EE1C84866C00D813EB /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		C14BF9EF1C84866C00D813EB /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		C14BF9F41C8497A500D813EB /* FeedTitleTableViewDataSourceRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedTitleTableViewDataSourceRow.h; path = ../ViewModels/FeedTitleTableViewDataSourceRow.h; sourceTree = "<group>"; };
-		C14BF9F51C8497A500D813EB /* FeedTitleTableViewDataSourceRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedTitleTableViewDataSourceRow.m; path = ../ViewModels/FeedTitleTableViewDataSourceRow.m; sourceTree = "<group>"; };
+		C14BF9F41C8497A500D813EB /* FeedTitleTableViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedTitleTableViewRow.h; path = ../ViewModels/FeedTitleTableViewRow.h; sourceTree = "<group>"; };
+		C14BF9F51C8497A500D813EB /* FeedTitleTableViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedTitleTableViewRow.m; path = ../ViewModels/FeedTitleTableViewRow.m; sourceTree = "<group>"; };
 		C19290371C6BBDAE00C6B651 /* FeedTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewDataSource.h; sourceTree = "<group>"; };
 		C19290381C6BBDAE00C6B651 /* FeedTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewDataSource.m; sourceTree = "<group>"; };
 		C192903B1C6BBE2C00C6B651 /* FeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
 		C192903C1C6BBE2C00C6B651 /* FeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
-		C19290451C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewDataSourceSection.h; sourceTree = "<group>"; };
-		C19290461C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewDataSourceSection.m; sourceTree = "<group>"; };
+		C19290451C6BC2DB00C6B651 /* FeedTableViewSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewSection.h; sourceTree = "<group>"; };
+		C19290461C6BC2DB00C6B651 /* FeedTableViewSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewSection.m; sourceTree = "<group>"; };
 		ECAE8D42FF6843279120FCC6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F0B98E1E98D6044D3628EB49 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,12 +138,12 @@
 			children = (
 				C19290371C6BBDAE00C6B651 /* FeedTableViewDataSource.h */,
 				C19290381C6BBDAE00C6B651 /* FeedTableViewDataSource.m */,
-				C19290451C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.h */,
-				C19290461C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m */,
-				C14BF9F41C8497A500D813EB /* FeedTitleTableViewDataSourceRow.h */,
-				C14BF9F51C8497A500D813EB /* FeedTitleTableViewDataSourceRow.m */,
-				C1306DEE1C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.h */,
-				C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.m */,
+				C19290451C6BC2DB00C6B651 /* FeedTableViewSection.h */,
+				C19290461C6BC2DB00C6B651 /* FeedTableViewSection.m */,
+				C14BF9F41C8497A500D813EB /* FeedTitleTableViewRow.h */,
+				C14BF9F51C8497A500D813EB /* FeedTitleTableViewRow.m */,
+				C1306DEE1C8C6C77000B7DD2 /* FeedButtonTableViewRow.h */,
+				C1306DEF1C8C6C77000B7DD2 /* FeedButtonTableViewRow.m */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -295,9 +295,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C192903D1C6BBE2C00C6B651 /* FeedItem.m in Sources */,
-				C19290471C6BC2DB00C6B651 /* FeedTableViewDataSourceSection.m in Sources */,
-				C14BF9F61C8497A500D813EB /* FeedTitleTableViewDataSourceRow.m in Sources */,
-				C1306DF01C8C6C77000B7DD2 /* FeedButtonTableViewDataSourceRow.m in Sources */,
+				C19290471C6BC2DB00C6B651 /* FeedTableViewSection.m in Sources */,
+				C14BF9F61C8497A500D813EB /* FeedTitleTableViewRow.m in Sources */,
+				C1306DF01C8C6C77000B7DD2 /* FeedButtonTableViewRow.m in Sources */,
 				C19290391C6BBDAE00C6B651 /* FeedTableViewDataSource.m in Sources */,
 				C14BF9F01C84866C00D813EB /* DetailViewController.m in Sources */,
 				C107386F1C6BBC0900689D61 /* FeedTitleTableViewCell.m in Sources */,

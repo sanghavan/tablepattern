@@ -9,7 +9,7 @@
 #import "FeedTableViewDataSource.h"
 
 #import "FeedItem.h"
-#import "FeedTableViewDataSourceSection.h"
+#import "FeedTableViewSection.h"
 
 @interface FeedTableViewDataSource ()
 
@@ -78,11 +78,11 @@
     }
 }
 
-- (TableViewDataSourceSection *)createDataSourceSectionInSection:(NSUInteger)section {
-    return [[FeedTableViewDataSourceSection alloc] initWithObject:[self.items objectAtIndex:section]];
+- (TableViewSection *)createSectionInSection:(NSUInteger)section {
+    return [[FeedTableViewSection alloc] initWithObject:[self.items objectAtIndex:section]];
 }
 
-- (NSInteger)numberOfSections {
+- (NSUInteger)numberOfSections {
     return [self.items count];
 }
 

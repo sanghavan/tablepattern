@@ -41,7 +41,7 @@
     _tableView = nil;
 }
 
-- (void)setTableViewDataSource:(TableViewDataSource *)dataSource {
+- (void)setDataSource:(TableViewDataSource *)dataSource {
     _dataSource = dataSource;
     [_dataSource setTableViewController:self];
     [self.tableView setDataSource:_dataSource];

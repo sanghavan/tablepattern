@@ -7,27 +7,25 @@
 //
 
 #import "TableViewDataSource.h"
-#import "TableViewDataSourceRow.h"
-#import "TableViewDataSourceSection.h"
+#import "TableViewRow.h"
+#import "TableViewSection.h"
 
 @interface TableViewCell : UITableViewCell
 
-@property(nonatomic, readonly) TableViewDataSourceRow *dataSourceRow;
-@property(nonatomic, readonly) TableViewDataSourceSection *dataSourceRowSection;
+@property(nonatomic, readonly) TableViewRow *row;
+@property(nonatomic, readonly) TableViewSection *rowSection;
 @property(nonatomic, readonly) TableViewDataSource *dataSource;
 
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow;
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection;
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
-                  inDataSource:(TableViewDataSource *)dataSource;
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow;
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection;
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
-                      inDataSource:(TableViewDataSource *)dataSource;
+- (void)setupWithRow:(TableViewRow *)row;
+- (void)setupWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
+- (void)setupWithRow:(TableViewRow *)row
+           inSection:(TableViewSection *)section
+        inDataSource:(TableViewDataSource *)dataSource;
++ (CGFloat)heightWithRow:(TableViewRow *)row;
++ (CGFloat)heightWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
++ (CGFloat)heightWithRow:(TableViewRow *)row
+               inSection:(TableViewSection *)section
+            inDataSource:(TableViewDataSource *)dataSource;
 + (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

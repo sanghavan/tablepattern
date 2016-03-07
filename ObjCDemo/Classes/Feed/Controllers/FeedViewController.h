@@ -6,7 +6,7 @@
 //
 //
 
-#import <TableViewDataSourceDesignPattern/TableViewDataSourceDesignPattern.h>
+#import <TablePattern/TablePattern.h>
 
 @interface FeedViewController : TableViewController
 

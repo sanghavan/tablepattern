@@ -1,23 +1,23 @@
 //
-//  FeedTitleTableViewDataSourceRow.m
+//  FeedTitleTableViewRow.m
 //  ObjCDemo
 //
 //  Created by materik on 29/02/16.
 //
 //
 
-#import "FeedTitleTableViewDataSourceRow.h"
+#import "FeedTitleTableViewRow.h"
 
 #import "DetailViewController.h"
 
-@implementation FeedTitleTableViewDataSourceRow
+@implementation FeedTitleTableViewRow
 
 - (Class)objectClass {
     return [NSString class];
 }
 
 - (void)didSelectCell:(UITableViewCell *)cell
-  inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
+  inSection:(TableViewSection *)section
          inDataSource:(TableViewDataSource *)dataSource {
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:self.object];
     [self.navigationController pushViewController:detailViewController animated:YES];

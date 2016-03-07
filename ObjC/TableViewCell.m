@@ -21,37 +21,35 @@ static CGFloat const kHeight = 44.0f;
     return self;
 }
 
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow {
+- (void)setupWithRow:(TableViewRow *)row {
     // Do nothing...
 }
 
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection {
-    return [self setupWithDataSourceRow:dataSourceRow];
+- (void)setupWithRow:(TableViewRow *)row inSection:(TableViewSection *)section {
+    return [self setupWithRow:row];
 }
 
-- (void)setupWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-           inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
-                  inDataSource:(TableViewDataSource *)dataSource {
+- (void)setupWithRow:(TableViewRow *)row
+           inSection:(TableViewSection *)section
+        inDataSource:(TableViewDataSource *)dataSource {
     _dataSource = dataSource;
-    _dataSourceRow = dataSourceRow;
-    _dataSourceRowSection = dataSourceSection;
-    return [self setupWithDataSourceRow:dataSourceRow inDataSourceSection:dataSourceSection];
+    _row = row;
+    _rowSection = section;
+    return [self setupWithRow:row inSection:section];
 }
 
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow {
++ (CGFloat)heightWithRow:(TableViewRow *)row {
     return kHeight;
 }
 
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection {
-    return [self heightWithDataSourceRow:dataSourceRow];
++ (CGFloat)heightWithRow:(TableViewRow *)row inSection:(TableViewSection *)section {
+    return [self heightWithRow:row];
 }
 
-+ (CGFloat)heightWithDataSourceRow:(TableViewDataSourceRow *)dataSourceRow
-               inDataSourceSection:(TableViewDataSourceSection *)dataSourceSection
-                      inDataSource:(TableViewDataSource *)dataSource {
-    return [self heightWithDataSourceRow:dataSourceRow inDataSourceSection:dataSourceSection];
++ (CGFloat)heightWithRow:(TableViewRow *)row
+               inSection:(TableViewSection *)section
+            inDataSource:(TableViewDataSource *)dataSource {
+    return [self heightWithRow:row inSection:section];
 }
 
 + (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource {

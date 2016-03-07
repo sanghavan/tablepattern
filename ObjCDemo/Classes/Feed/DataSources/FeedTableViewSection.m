@@ -1,16 +1,16 @@
 //
-//  FeedTableViewDataSourceSection.m
+//  FeedTableViewSection.m
 //  ObjCDemo
 //
 //  Created by materik on 10/02/16.
 //
 //
 
-#import "FeedTableViewDataSourceSection.h"
+#import "FeedTableViewSection.h"
 
-#import "FeedButtonTableViewDataSourceRow.h"
+#import "FeedButtonTableViewRow.h"
 #import "FeedItem.h"
-#import "FeedTitleTableViewDataSourceRow.h"
+#import "FeedTitleTableViewRow.h"
 
 typedef NS_ENUM(NSUInteger, FeedRow) {
     FeedRowTitle,
@@ -19,13 +19,13 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
     FeedRowCount,
 };
 
-@interface FeedTableViewDataSourceSection ()
+@interface FeedTableViewSection ()
 
 @property(nonatomic, assign, getter=isDescHidden) BOOL hideDesc;
 
 @end
 
-@implementation FeedTableViewDataSourceSection
+@implementation FeedTableViewSection
 
 - (Class)objectClass {
     return [FeedItem class];
@@ -35,12 +35,12 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
     return FeedRowCount;
 }
 
-- (TableViewDataSourceRow *)createDataSourceRowAtRow:(NSUInteger)row {
+- (TableViewRow *)createRowAtRow:(NSUInteger)row {
     FeedItem *feedItem = (FeedItem *)self.object;
     switch ((FeedRow)row) {
         case FeedRowButton: {
             NSString *title = self.isDescHidden ? @"+ Show Desc" : @"- Hide Desc";
-            return [[FeedButtonTableViewDataSourceRow alloc] initWithObject:title];
+            return [[FeedButtonTableViewRow alloc] initWithObject:title];
         }
         case FeedRowCount: {
             return nil;
@@ -49,10 +49,10 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
             if (self.isDescHidden) {
                 return nil;
             }
-            return [[FeedTitleTableViewDataSourceRow alloc] initWithObject:feedItem.desc];
+            return [[FeedTitleTableViewRow alloc] initWithObject:feedItem.desc];
         }
         case FeedRowTitle: {
-            return [[FeedTitleTableViewDataSourceRow alloc] initWithObject:feedItem.title];
+            return [[FeedTitleTableViewRow alloc] initWithObject:feedItem.title];
         }
     }
 }
@@ -61,8 +61,8 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 
 - (void)toggleHideDescriptionInDataSource:(TableViewDataSource *)dataSource {
     [self setHideDesc:!self.isDescHidden];
-    [self reloadDataSourceRowAtRow:FeedRowDesc inDataSource:dataSource withRowAnimation:UITableViewRowAnimationFade];
-    [self reloadDataSourceRowAtRow:FeedRowButton
+    [self reloadRowAtRow:FeedRowDesc inDataSource:dataSource withRowAnimation:UITableViewRowAnimationFade];
+    [self reloadRowAtRow:FeedRowButton
                       inDataSource:dataSource
                   withRowAnimation:UITableViewRowAnimationAutomatic];
 }
