@@ -21,35 +21,35 @@ static CGFloat const kHeight = 44.0f;
     return self;
 }
 
-- (void)setupOfCellWithRow:(TableViewRow *)row {
+- (void)setupInRow:(TableViewRow *)row {
     // Do nothing...
 }
 
-- (void)setupOfCellWithRow:(TableViewRow *)row inSection:(TableViewSection *)section {
-    return [self setupOfCellWithRow:row];
+- (void)setupInRow:(TableViewRow *)row inSection:(TableViewSection *)section {
+    return [self setupInRow:row];
 }
 
-- (void)setupOfCellWithRow:(TableViewRow *)row
+- (void)setupInRow:(TableViewRow *)row
            inSection:(TableViewSection *)section
         inDataSource:(TableViewDataSource *)dataSource {
     _dataSource = dataSource;
     _row = row;
     _rowSection = section;
-    return [self setupOfCellWithRow:row inSection:section];
+    return [self setupInRow:row inSection:section];
 }
 
-+ (CGFloat)heightOfCellWithRow:(TableViewRow *)row {
++ (CGFloat)heightInRow:(TableViewRow *)row {
     return kHeight;
 }
 
-+ (CGFloat)heightOfCellWithRow:(TableViewRow *)row inSection:(TableViewSection *)section {
-    return [self heightOfCellWithRow:row];
++ (CGFloat)heightInRow:(TableViewRow *)row inSection:(TableViewSection *)section {
+    return [self heightInRow:row];
 }
 
-+ (CGFloat)heightOfCellWithRow:(TableViewRow *)row
++ (CGFloat)heightInRow:(TableViewRow *)row
                inSection:(TableViewSection *)section
             inDataSource:(TableViewDataSource *)dataSource {
-    return [self heightOfCellWithRow:row inSection:section];
+    return [self heightInRow:row inSection:section];
 }
 
 + (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource {

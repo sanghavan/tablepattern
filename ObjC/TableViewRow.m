@@ -66,7 +66,7 @@
 - (CGFloat)heightInSection:(TableViewSection *)section inDataSource:(TableViewDataSource *)dataSource {
     NSAssert([self.cellClass isSubclassOfClass:[TableViewCell class]],
              @"TableViewRow: cellClass needs to be subclass of TableViewCell");
-    return [self.cellClass heightOfCellWithRow:self inSection:section inDataSource:dataSource];
+    return [self.cellClass heightInRow:self inSection:section inDataSource:dataSource];
 }
 
 - (TableViewCell *)dequeueOrCreateReusableCellInSection:(TableViewSection *)section
@@ -74,7 +74,7 @@
     NSAssert([self.cellClass isSubclassOfClass:[TableViewCell class]],
              @"TableViewRow: cellClass needs to be subclass of TableViewCell");
     TableViewCell *cell = [self.cellClass dequeueOrCreateReusableCellInDataSource:dataSource];
-    [cell setupOfCellWithRow:self inSection:section inDataSource:dataSource];
+    [cell setupInRow:self inSection:section inDataSource:dataSource];
     return cell;
 }
 
