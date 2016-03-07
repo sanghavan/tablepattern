@@ -2,6 +2,7 @@
   "name": "TablePattern",
   "version": "1.0",
   "homepage": "https://github.com/materik/tablepattern.git",
+  "summary": "Table view data source design pattern",
   "license": {
     "type": "MIT",
     "file": "LICENSE.md"
