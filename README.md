@@ -28,6 +28,11 @@ Or by using [Alcatraz Package Manager](http://alcatraz.io/).
 
 ## Pattern
 
+- Seperating data logic from the `ViewController`.
+- Making operations more context oriented to the specific section, row or cell.
+- Creating more flexible and reuseble models by including logic in the classes.
+- Smaller classes, easier to read and understand.
+
 ### TableViewController
 
   - *Need to be subclassed*
