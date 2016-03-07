@@ -16,16 +16,16 @@
 @property(nonatomic, readonly) TableViewSection *rowSection;
 @property(nonatomic, readonly) TableViewDataSource *dataSource;
 
-- (void)setupWithRow:(TableViewRow *)row;
-- (void)setupWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
-- (void)setupWithRow:(TableViewRow *)row
-           inSection:(TableViewSection *)section
-        inDataSource:(TableViewDataSource *)dataSource;
-+ (CGFloat)heightWithRow:(TableViewRow *)row;
-+ (CGFloat)heightWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
-+ (CGFloat)heightWithRow:(TableViewRow *)row
-               inSection:(TableViewSection *)section
-            inDataSource:(TableViewDataSource *)dataSource;
+- (void)setupOfCellWithRow:(TableViewRow *)row;
+- (void)setupOfCellWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
+- (void)setupOfCellWithRow:(TableViewRow *)row
+                 inSection:(TableViewSection *)section
+              inDataSource:(TableViewDataSource *)dataSource;
++ (CGFloat)heightOfCellWithRow:(TableViewRow *)row;
++ (CGFloat)heightOfCellWithRow:(TableViewRow *)row inSection:(TableViewSection *)section;
++ (CGFloat)heightOfCellWithRow:(TableViewRow *)row
+                     inSection:(TableViewSection *)section
+                  inDataSource:(TableViewDataSource *)dataSource;
 + (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

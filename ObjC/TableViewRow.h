@@ -13,7 +13,7 @@
 @interface TableViewRow : UIViewController
 
 @property(nonatomic, strong) id object;
-@property(nonatomic, assign) NSUInteger rowIndex;
+@property(nonatomic, assign) NSUInteger index;
 @property(nonatomic, readonly) Class cellClass;
 @property(nonatomic, readonly) Class objectClass;
 

@@ -78,7 +78,7 @@
     }
 }
 
-- (TableViewSection *)createSectionInSection:(NSUInteger)section {
+- (TableViewSection *)createSectionAtIndex:(NSUInteger)section {
     return [[FeedTableViewSection alloc] initWithObject:[self.items objectAtIndex:section]];
 }
 

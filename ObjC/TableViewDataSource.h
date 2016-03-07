@@ -31,8 +31,8 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
                       withLimit:(NSUInteger)limit
                    onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion;
 
-- (TableViewSection *)createSectionInSection:(NSUInteger)section;
-- (TableViewSection *)getSectionInSection:(NSUInteger)section;
+- (TableViewSection *)createSectionAtIndex:(NSUInteger)index;
+- (TableViewSection *)getSectionAtIndex:(NSUInteger)index;
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

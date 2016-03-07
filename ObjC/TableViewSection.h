@@ -13,17 +13,17 @@
 @interface TableViewSection : UIViewController
 
 @property(nonatomic, strong) id object;
-@property(nonatomic, assign) NSUInteger sectionIndex;
+@property(nonatomic, assign) NSUInteger index;
 @property(nonatomic, readonly) NSUInteger numberOfRows;
 @property(nonatomic, readonly) Class objectClass;
 
 - (instancetype)initWithObject:(id)object;
 
-- (TableViewRow *)createRowAtRow:(NSUInteger)row;
-- (TableViewRow *)getRowAtRow:(NSUInteger)row;
-- (void)reloadRowAtRow:(NSUInteger)row
-          inDataSource:(TableViewDataSource *)dataSource
-      withRowAnimation:(UITableViewRowAnimation)animation;
+- (TableViewRow *)createRowAtIndex:(NSUInteger)index;
+- (TableViewRow *)getRowAtIndex:(NSUInteger)index;
+- (void)reloadRowAtIndex:(NSUInteger)index
+            inDataSource:(TableViewDataSource *)dataSource
+        withRowAnimation:(UITableViewRowAnimation)animation;
 
 - (CGFloat)headerHeightInDataSource:(TableViewDataSource *)dataSource;
 - (UIView *)headerViewInDataSource:(TableViewDataSource *)dataSource;

@@ -39,8 +39,8 @@
     return 0;
 }
 
-- (TableViewRow *)createRowAtRow:(NSUInteger)row {
-    NSAssert(NO, @"TableViewSection: createRowAtRow: need to be implemented by subclass");
+- (TableViewRow *)createRowAtIndex:(NSUInteger)row {
+    NSAssert(NO, @"TableViewSection: createRowAtIndex: need to be implemented by subclass");
     return nil;
 }
 
@@ -66,33 +66,33 @@
 
 - (void)setupRows {
     NSMutableArray *rows = [NSMutableArray array];
-    for (int rowIndex = 0; rowIndex < [self numberOfRows]; rowIndex++) {
-        TableViewRow *row = [self createRowAtRow:rowIndex];
-        [row setRowIndex:rowIndex];
+    for (int index = 0; index < [self numberOfRows]; index++) {
+        TableViewRow *row = [self createRowAtIndex:index];
+        [row setIndex:index];
         [rows addObject:row];
     }
     [self setRows:rows];
 }
 
-- (TableViewRow *)getRowAtRow:(NSUInteger)rowIndex {
-    if (rowIndex < [self.rows count]) {
-        TableViewRow *row = [self.rows objectAtIndex:rowIndex];
+- (TableViewRow *)getRowAtIndex:(NSUInteger)index {
+    if (index < [self.rows count]) {
+        TableViewRow *row = [self.rows objectAtIndex:index];
         return [row isKindOfClass:[NSNull class]] ? nil : row;
     }
     return nil;
 }
 
-- (void)reloadRowAtRow:(NSUInteger)rowIndex
-          inDataSource:(TableViewDataSource *)dataSource
-      withRowAnimation:(UITableViewRowAnimation)animation {
-    TableViewRow *row = [self createRowAtRow:rowIndex];
-    [row setRowIndex:rowIndex];
+- (void)reloadRowAtIndex:(NSUInteger)index
+            inDataSource:(TableViewDataSource *)dataSource
+        withRowAnimation:(UITableViewRowAnimation)animation {
+    TableViewRow *row = [self createRowAtIndex:index];
+    [row setIndex:index];
 
     NSMutableArray *rows = [self.rows mutableCopy];
-    [rows replaceObjectAtIndex:rowIndex withObject:row ?: [NSNull null]];
+    [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
     [self setRows:rows];
 
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:self.sectionIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.index];
     [dataSource.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:animation];
 }
 

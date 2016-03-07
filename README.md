@@ -38,7 +38,7 @@ pattern.
     - Do the same as `loadDataOnCompletion`, the only exception is that the
       completion block takes a boolean which indicates if there is more data to
       load or not.
-  - `- createSectionInSection:`
+  - `- createSectionAtIndex:`
     - Create an instance of a subclassed `TableViewSection`, given the data
       that has been loaded in either `loadData` method, for that specific section.
 
@@ -49,7 +49,7 @@ pattern.
     - What is the class if the `id` object stored by the section.
   - `- numberOfRows`
     - Return the number of rows that this section should contain.
-  - `- createRowAtRow:`
+  - `- createRowAtIndex:`
     - Create an instance of a subclassed `TableViewRow`, given the
       object stored by the section, for that specific row.
 

@@ -74,15 +74,15 @@ static NSString *const kEmptyCellReuseIdentifier;
     return 0;
 }
 
-- (TableViewSection *)createSectionInSection:(NSUInteger)section {
-    NSAssert(NO, @"TableViewDataSource: createSectionInSection: need to be implemented by subclass");
+- (TableViewSection *)createSectionAtIndex:(NSUInteger)section {
+    NSAssert(NO, @"TableViewDataSource: createSectionAtIndex: need to be implemented by subclass");
     return nil;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self getSectionInSection:section] numberOfRows];
+    return [[self getSectionAtIndex:section] numberOfRows];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -90,8 +90,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    TableViewRow *row = [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
     if (row) {
         return [row dequeueOrCreateReusableCellInSection:section inDataSource:self];
     }
@@ -106,8 +106,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    TableViewRow *row = [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
     if (row) {
         return [row heightInSection:section inDataSource:self];
     }
@@ -116,8 +116,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    TableViewRow *row = [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
     if (row) {
         [row didSelectCell:(TableViewCell *)cell inSection:section inDataSource:self];
     }
@@ -126,8 +126,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    TableViewRow *row = [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
     if (row) {
         [row willDisplayCell:(TableViewCell *)cell inSection:section inDataSource:self];
         [self.tableViewController addChildViewController:section];
@@ -143,8 +143,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView
     didEndDisplayingCell:(UITableViewCell *)cell
        forRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    TableViewRow *row = [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
     if (row) {
         [row didEndDisplayingCell:(TableViewCell *)cell inSection:section inDataSource:self];
         [row removeFromParentViewController];
@@ -158,23 +158,23 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark Header/Footer
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)sectionIndex {
-    TableViewSection *section = [self getSectionInSection:sectionIndex];
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)index {
+    TableViewSection *section = [self getSectionAtIndex:index];
     return [section headerHeightInDataSource:self];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)sectionIndex {
-    TableViewSection *section = [self getSectionInSection:sectionIndex];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)index {
+    TableViewSection *section = [self getSectionAtIndex:index];
     return [section headerViewInDataSource:self];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)sectionIndex {
-    TableViewSection *section = [self getSectionInSection:sectionIndex];
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)index {
+    TableViewSection *section = [self getSectionAtIndex:index];
     return [section footerHeightInDataSource:self];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)sectionIndex {
-    TableViewSection *section = [self getSectionInSection:sectionIndex];
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)index {
+    TableViewSection *section = [self getSectionAtIndex:index];
     return [section footerViewInDataSource:self];
 }
 
@@ -182,15 +182,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)setupSections {
     NSMutableArray *sections = [NSMutableArray array];
-    for (int sectionIndex = 0; sectionIndex < [self numberOfSections]; sectionIndex++) {
-        TableViewSection *section = [self createSectionInSection:sectionIndex];
-        [section setSectionIndex:sectionIndex];
+    for (int index = 0; index < [self numberOfSections]; index++) {
+        TableViewSection *section = [self createSectionAtIndex:index];
+        [section setIndex:index];
         [sections addObject:section];
     }
     [self setSections:sections];
 }
 
-- (TableViewSection *)getSectionInSection:(NSUInteger)section {
+- (TableViewSection *)getSectionAtIndex:(NSUInteger)section {
     if (section < [self.sections count]) {
         return [self.sections objectAtIndex:section];
     }
@@ -198,8 +198,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionInSection:indexPath.section];
-    return [section getRowAtRow:indexPath.row];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    return [section getRowAtIndex:indexPath.row];
 }
 
 @end

@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
     return FeedRowCount;
 }
 
-- (TableViewRow *)createRowAtRow:(NSUInteger)row {
+- (TableViewRow *)createRowAtIndex:(NSUInteger)row {
     FeedItem *feedItem = (FeedItem *)self.object;
     switch ((FeedRow)row) {
         case FeedRowButton: {
@@ -61,8 +61,8 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 
 - (void)toggleHideDescriptionInDataSource:(TableViewDataSource *)dataSource {
     [self setHideDesc:!self.isDescHidden];
-    [self reloadRowAtRow:FeedRowDesc inDataSource:dataSource withRowAnimation:UITableViewRowAnimationFade];
-    [self reloadRowAtRow:FeedRowButton
+    [self reloadRowAtIndex:FeedRowDesc inDataSource:dataSource withRowAnimation:UITableViewRowAnimationFade];
+    [self reloadRowAtIndex:FeedRowButton
                       inDataSource:dataSource
                   withRowAnimation:UITableViewRowAnimationAutomatic];
 }

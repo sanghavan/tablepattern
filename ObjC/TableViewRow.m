@@ -57,7 +57,7 @@
 - (void)reloadInSection:(TableViewSection *)section
            inDataSource:(TableViewDataSource *)dataSource
        withRowAnimation:(UITableViewRowAnimation)animation {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.rowIndex inSection:section.sectionIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.index inSection:section.index];
     [dataSource.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:animation];
 }
 
@@ -66,7 +66,7 @@
 - (CGFloat)heightInSection:(TableViewSection *)section inDataSource:(TableViewDataSource *)dataSource {
     NSAssert([self.cellClass isSubclassOfClass:[TableViewCell class]],
              @"TableViewRow: cellClass needs to be subclass of TableViewCell");
-    return [self.cellClass heightWithRow:self inSection:section inDataSource:dataSource];
+    return [self.cellClass heightOfCellWithRow:self inSection:section inDataSource:dataSource];
 }
 
 - (TableViewCell *)dequeueOrCreateReusableCellInSection:(TableViewSection *)section
@@ -74,7 +74,7 @@
     NSAssert([self.cellClass isSubclassOfClass:[TableViewCell class]],
              @"TableViewRow: cellClass needs to be subclass of TableViewCell");
     TableViewCell *cell = [self.cellClass dequeueOrCreateReusableCellInDataSource:dataSource];
-    [cell setupWithRow:self inSection:section inDataSource:dataSource];
+    [cell setupOfCellWithRow:self inSection:section inDataSource:dataSource];
     return cell;
 }
 
