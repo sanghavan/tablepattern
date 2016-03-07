@@ -16,6 +16,16 @@ pod 'TablePattern'
 Checkout the `xcworkspace` in `ObjCDemo` to get an idea of how to implement the
 pattern.
 
+## Templates
+
+Install the Xcode file templates by either executing:
+
+```
+ln -s Templates ~/Library/Developer/Xcode/Templates/File\ Templates/TablePattern`
+```
+
+Or by using [Alcatraz Package Manager](http://alcatraz.io/).
+
 ## Pattern
 
 ### TableViewController
