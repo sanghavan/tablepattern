@@ -22,7 +22,7 @@
 
 /* Begin PBXFileReference section */
 		ACB9A8A8640F9306A5EE75F6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C107384B1C6BB48700689D61 /* ObjCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjCDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C107384B1C6BB48700689D61 /* Demo.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C107384F1C6BB48700689D61 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C10738511C6BB48700689D61 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C10738521C6BB48700689D61 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		C107384C1C6BB48700689D61 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C107384B1C6BB48700689D61 /* ObjCDemo.app */,
+				C107384B1C6BB48700689D61 /* Demo.temp_caseinsensitive_rename.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,9 +180,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C107384A1C6BB48700689D61 /* ObjCDemo */ = {
+		C107384A1C6BB48700689D61 /* Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C10738621C6BB48700689D61 /* Build configuration list for PBXNativeTarget "ObjCDemo" */;
+			buildConfigurationList = C10738621C6BB48700689D61 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
 				82ADFC1C972B8739BB3C7F9D /* Check Pods Manifest.lock */,
 				C10738471C6BB48700689D61 /* Sources */,
@@ -195,9 +195,9 @@
 			);
 			dependencies = (
 			);
-			name = ObjCDemo;
+			name = Demo;
 			productName = ObjCDemo;
-			productReference = C107384B1C6BB48700689D61 /* ObjCDemo.app */;
+			productReference = C107384B1C6BB48700689D61 /* Demo.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -213,7 +213,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C10738461C6BB48700689D61 /* Build configuration list for PBXProject "ObjCDemo" */;
+			buildConfigurationList = C10738461C6BB48700689D61 /* Build configuration list for PBXProject "Demo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -226,7 +226,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C107384A1C6BB48700689D61 /* ObjCDemo */,
+				C107384A1C6BB48700689D61 /* Demo */,
 			);
 		};
 /* End PBXProject section */
@@ -397,8 +397,8 @@
 				INFOPLIST_FILE = "Classes/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thematerik.ObjCDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thematerik.Demo;
+				PRODUCT_NAME = Demo.temp_caseinsensitive_rename;
 			};
 			name = Debug;
 		};
@@ -409,15 +409,15 @@
 				INFOPLIST_FILE = "Classes/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thematerik.ObjCDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thematerik.Demo;
+				PRODUCT_NAME = Demo.temp_caseinsensitive_rename;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C10738461C6BB48700689D61 /* Build configuration list for PBXProject "ObjCDemo" */ = {
+		C10738461C6BB48700689D61 /* Build configuration list for PBXProject "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C10738601C6BB48700689D61 /* Debug */,
@@ -426,7 +426,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C10738621C6BB48700689D61 /* Build configuration list for PBXNativeTarget "ObjCDemo" */ = {
+		C10738621C6BB48700689D61 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C10738631C6BB48700689D61 /* Debug */,

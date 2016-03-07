@@ -13,7 +13,7 @@ pod 'TablePattern'
 
 ## Demo
 
-Checkout the `xcworkspace` in `ObjCDemo` to get an idea of how to implement the
+Checkout the `xcworkspace` in `Demo` to get an idea of how to implement the
 pattern.
 
 ## Templates

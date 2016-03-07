@@ -1,6 +1,6 @@
 {
   "name": "TablePattern",
-  "version": "1.1",
+  "version": "1.2",
   "homepage": "https://github.com/materik/tablepattern.git",
   "summary": "Table view data source design pattern",
   "license": {
@@ -15,10 +15,10 @@
   },
   "source": {
     "git": "https://github.com/materik/tablepattern.git",
-    "tag": "1.1"
+    "tag": "1.2"
   },
   "exclude_files": [
-     "ObjCTests"
+     "Demo"
   ],
   "frameworks": [
     "UIKit"
@@ -27,7 +27,7 @@
   "subspecs": [
     {
       "name": "ObjC",
-      "source_files": "ObjC/*.{h,m}"
+      "source_files": "Source/*.{h,m}"
     }
   ]
 }
