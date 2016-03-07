@@ -12,8 +12,8 @@
 
 @implementation FeedViewController
 
-- (instancetype)initWithTableViewStyle:(UITableViewStyle)style {
-    self = [super initWithTableViewStyle:style];
+- (instancetype)initWithTableViewStyle:(UITableViewStyle)tableViewStyle {
+    self = [super initWithTableViewStyle:tableViewStyle];
     if (self) {
         [self setDataSource:[[FeedTableViewDataSource alloc] init]];
     }

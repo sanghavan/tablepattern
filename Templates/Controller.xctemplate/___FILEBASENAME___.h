@@ -4,6 +4,6 @@
 
 #import <TablePattern/TablePattern.h>
 
-@interface ___FILEBASENAMEASIDENTIFIER___ : ___VARIABLE_SubClass___
+@interface ___FILEBASENAMEASIDENTIFIER___ : TableViewController
 
 @end

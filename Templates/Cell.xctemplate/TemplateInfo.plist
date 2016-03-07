@@ -32,14 +32,6 @@
         </dict>
         <dict>
             <key>Default</key>
-            <string>TableViewCell</string>
-            <key>Identifier</key>
-            <string>SubClass</string>
-            <key>Type</key>
-            <string>static</string>
-        </dict>
-        <dict>
-            <key>Default</key>
             <string>___VARIABLE_Name:identifier___TableViewCell</string>
             <key>Identifier</key>
             <string>productName</string>

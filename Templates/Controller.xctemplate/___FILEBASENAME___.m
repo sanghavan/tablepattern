@@ -6,10 +6,10 @@
 
 @implementation ___FILEBASENAMEASIDENTIFIER___
 
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (instancetype)initWithTableViewStyle:(UITableViewStyle)tableViewStyle {
+    self = [super initWithTableViewStyle:tableViewStyle];
     if (self) {
-        [self setDataSource:<#(TableViewDataSource *)#>]; // TODO
+        [self setDataSource:<#(TableViewDataSource *)#>];
     }
     return self;
 }
