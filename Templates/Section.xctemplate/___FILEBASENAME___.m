@@ -6,4 +6,18 @@
 
 @implementation ___FILEBASENAMEASIDENTIFIER___
 
+#pragma mark - TableViewSection
+
+- (Class)objectClass {
+    return <#(Class) #>;
+}
+
+- (NSUInteger)numberOfRows {
+    return <#(NSUInteger) #>;
+}
+
+- (TableViewRow *)createRowAtIndex:(NSUInteger)index {
+    return <#(TableViewRow *)#>;
+}
+
 @end
