@@ -198,8 +198,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray *sections = [NSMutableArray array];
     for (int index = 0; index < [self numberOfSections]; index++) {
         TableViewSection *section = [self createSectionAtIndex:index];
-        [section setIndex:index];
-        [sections addObject:section];
+        if (section) {
+            [section setIndex:index];
+            [sections addObject:section];
+        }
     }
     [self setSections:sections];
 }
