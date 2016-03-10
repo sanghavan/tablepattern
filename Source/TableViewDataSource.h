@@ -11,6 +11,7 @@
 
 typedef void (^TableViewDataSourceLoadPaginatedDataCompletion)(BOOL hasMore);
 typedef void (^TableViewDataSourceLoadDataCompletion)();
+typedef void (^TableViewDataSourceReloadDataCompletion)();
 
 @protocol TableViewDataSourceParentViewController <NSObject>
 @property(nonatomic, readonly) UITableView *tableView;
@@ -25,7 +26,9 @@ typedef void (^TableViewDataSourceLoadDataCompletion)();
 @property(nonatomic, readonly) NSUInteger numberOfSections;
 
 - (void)resetData;
+- (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
 - (void)reloadData;
+- (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
 - (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion;
 - (void)loadPaginatedDataInPage:(NSUInteger)page
                       withLimit:(NSUInteger)limit

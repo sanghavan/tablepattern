@@ -32,11 +32,19 @@ static NSString *const kEmptyCellReuseIdentifier;
 #pragma mark - TableViewDataSource
 
 - (void)resetData {
+    [self resetDataOnCompletion:nil];
+}
+
+- (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     [self setPaginationPage:self.isPaginationEnabled ? kPaginationPageDefault : kPaginationPageDisabled];
-    [self reloadData];
+    [self reloadDataOnCompletion:completion];
 }
 
 - (void)reloadData {
+    [self reloadDataOnCompletion:nil];
+}
+
+- (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
     if (self.isPaginationEnabled) {
         NSAssert(self.paginationLimit > 0,
@@ -46,10 +54,16 @@ static NSString *const kEmptyCellReuseIdentifier;
                          onCompletion:^(BOOL hasMore) {
                            [weakSelf setPaginationPage:hasMore ? weakSelf.paginationPage + 1 : kPaginationPageDisabled];
                            [weakSelf setupData];
+                           if (completion) {
+                               completion();
+                           }
                          }];
     } else {
         [self loadDataOnCompletion:^{
           [weakSelf setupData];
+          if (completion) {
+              completion();
+          }
         }];
     }
 }
