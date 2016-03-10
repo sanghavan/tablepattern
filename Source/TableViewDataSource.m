@@ -29,6 +29,10 @@ static NSString *const kEmptyCellReuseIdentifier;
     return self.tableViewController.tableView;
 }
 
+- (void)setLoading:(BOOL)loading {
+    _loading = loading;
+}
+
 #pragma mark - TableViewDataSource
 
 - (void)resetData {
@@ -46,6 +50,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
+    [self setLoading:YES];
     if (self.isPaginationEnabled) {
         NSAssert(self.paginationLimit > 0,
                  @"TableViewDataSource: reloadData: need to specify paginationLimit if you're going to use pagination");
@@ -71,6 +76,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setupData {
     [self setupSections];
     [self.tableView reloadData];
+    [self setLoading:NO];
 }
 
 - (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
@@ -147,7 +153,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 
     if (indexPath.section == [self numberOfSections] - 1 && indexPath.row == [section numberOfRows] - 1 &&
-        self.paginationPage != kPaginationPageDisabled) {
+        self.paginationPage != kPaginationPageDisabled && !self.isLoading) {
         [self reloadData];
     }
 }

@@ -24,6 +24,7 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 @property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign) NSUInteger paginationLimit;
 @property(nonatomic, readonly) NSUInteger numberOfSections;
+@property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 - (void)resetData;
 - (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
