@@ -16,8 +16,10 @@
 - (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
-        NSAssert([object isKindOfClass:self.objectClass], @"TableViewRow: object need to be of class %@",
-                 self.objectClass);
+        if (self.object && self.objectClass) {
+            NSAssert([object isKindOfClass:self.objectClass], @"TableViewRow: object need to be of class %@",
+                     self.objectClass);
+        }
         [self setObject:object];
     }
     return self;

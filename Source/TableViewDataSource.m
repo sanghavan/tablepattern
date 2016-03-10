@@ -19,7 +19,6 @@ static NSString *const kEmptyCellReuseIdentifier;
 @interface TableViewDataSource ()
 
 @property(nonatomic, strong) NSArray<TableViewSection *> *sections;
-@property(nonatomic, assign) NSUInteger paginationPage;
 
 @end
 
