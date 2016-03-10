@@ -24,7 +24,6 @@
         NSAssert([object isKindOfClass:self.objectClass], @"TableViewSection: object need to be of class %@",
                  self.objectClass);
         [self setObject:object];
-        [self setupRows];
     }
     return self;
 }

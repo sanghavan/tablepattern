@@ -18,6 +18,7 @@
 @property(nonatomic, readonly) Class objectClass;
 
 - (instancetype)initWithObject:(id)object;
+- (void)setupRows;
 
 - (TableViewRow *)createRowAtIndex:(NSUInteger)index;
 - (TableViewRow *)getRowAtIndex:(NSUInteger)index;

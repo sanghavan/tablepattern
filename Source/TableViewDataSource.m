@@ -204,6 +204,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         TableViewSection *section = [self createSectionAtIndex:index];
         if (section) {
             [section setIndex:index];
+            [section setupRows];
             [sections addObject:section];
         }
     }
