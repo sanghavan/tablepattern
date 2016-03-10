@@ -1,6 +1,6 @@
 {
   "name": "TablePattern",
-  "version": "1.2",
+  "version": "1.2.1",
   "homepage": "https://github.com/materik/tablepattern.git",
   "summary": "Table view data source design pattern",
   "license": {
@@ -15,7 +15,7 @@
   },
   "source": {
     "git": "https://github.com/materik/tablepattern.git",
-    "tag": "1.2"
+    "tag": "1.2.1"
   },
   "exclude_files": [
      "Demo"
