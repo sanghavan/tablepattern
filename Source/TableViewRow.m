@@ -36,12 +36,6 @@
 
 #pragma mark - TableView
 
-- (void)didSelectCell:(UITableViewCell *)cell
-            inSection:(TableViewSection *)section
-         inDataSource:(TableViewDataSource *)dataSource {
-    // Do nothing...
-}
-
 - (void)willDisplayCell:(UITableViewCell *)cell
               inSection:(TableViewSection *)section
            inDataSource:(TableViewDataSource *)dataSource {
@@ -51,6 +45,10 @@
 - (void)didEndDisplayingCell:(UITableViewCell *)cell
                    inSection:(TableViewSection *)section
                 inDataSource:(TableViewDataSource *)dataSource {
+    // Do nothing...
+}
+
+- (void)didSelectInSection:(TableViewSection *)section inDataSource:(TableViewDataSource *)dataSource {
     // Do nothing...
 }
 

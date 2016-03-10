@@ -19,15 +19,13 @@
 
 - (instancetype)initWithObject:(id)object;
 
-- (void)didSelectCell:(TableViewCell *)cell
-            inSection:(TableViewSection *)section
-         inDataSource:(TableViewDataSource *)dataSource;
 - (void)willDisplayCell:(TableViewCell *)cell
               inSection:(TableViewSection *)section
            inDataSource:(TableViewDataSource *)dataSource;
 - (void)didEndDisplayingCell:(TableViewCell *)cell
                    inSection:(TableViewSection *)section
                 inDataSource:(TableViewDataSource *)dataSource;
+- (void)didSelectInSection:(TableViewSection *)section inDataSource:(TableViewDataSource *)dataSource;
 - (void)reloadInSection:(TableViewSection *)section
            inDataSource:(TableViewDataSource *)dataSource
        withRowAnimation:(UITableViewRowAnimation)animation;

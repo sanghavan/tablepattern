@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class TableViewDataSource, TableViewRow;
+@class TableViewCell, TableViewDataSource, TableViewRow;
 
 @interface TableViewSection : UIViewController
 
@@ -21,6 +21,8 @@
 
 - (TableViewRow *)createRowAtIndex:(NSUInteger)index;
 - (TableViewRow *)getRowAtIndex:(NSUInteger)index;
+- (void)didSelectRowAtIndex:(NSUInteger)index inDataSource:(TableViewDataSource *)dataSource;
+- (void)reloadInDataSource:(TableViewDataSource *)dataSource withRowAnimation:(UITableViewRowAnimation)animation;
 - (void)reloadRowAtIndex:(NSUInteger)index
             inDataSource:(TableViewDataSource *)dataSource
         withRowAnimation:(UITableViewRowAnimation)animation;

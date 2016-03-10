@@ -84,6 +84,19 @@
     return nil;
 }
 
+- (void)didSelectRowAtIndex:(NSUInteger)index inDataSource:(TableViewDataSource *)dataSource {
+    TableViewRow *row = [self.rows objectAtIndex:index];
+    if (row) {
+        [row didSelectInSection:self inDataSource:dataSource];
+    }
+}
+
+- (void)reloadInDataSource:(TableViewDataSource *)dataSource withRowAnimation:(UITableViewRowAnimation)animation {
+    [self setupRows];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:self.index];
+    [dataSource.tableView reloadSections:indexSet withRowAnimation:animation];
+}
+
 - (void)reloadRowAtIndex:(NSUInteger)index
             inDataSource:(TableViewDataSource *)dataSource
         withRowAnimation:(UITableViewRowAnimation)animation {

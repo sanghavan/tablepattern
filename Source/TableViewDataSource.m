@@ -129,11 +129,9 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-    if (row) {
-        [row didSelectCell:(TableViewCell *)cell inSection:section inDataSource:self];
+    if (section) {
+        [section didSelectRowAtIndex:indexPath.row inDataSource:self];
     }
 }
 
