@@ -60,10 +60,8 @@
     NSMutableArray *rows = [NSMutableArray array];
     for (int index = 0; index < [self numberOfRows]; index++) {
         TableViewRow *row = [self createRowAtIndex:index];
-        if (row) {
-            [row setIndex:index];
-            [rows addObject:row];
-        }
+        [row setIndex:index];
+        [rows addObject:row ?: [NSNull null]];
     }
     [self setRows:rows];
 }

@@ -201,18 +201,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray *sections = [NSMutableArray array];
     for (int index = 0; index < [self numberOfSections]; index++) {
         TableViewSection *section = [self createSectionAtIndex:index];
-        if (section) {
-            [section setIndex:index];
-            [section setupRows];
-            [sections addObject:section];
-        }
+        [section setIndex:index];
+        [section setupRows];
+        [sections addObject:section ?: [NSNull null]];
     }
     [self setSections:sections];
 }
 
-- (TableViewSection *)getSectionAtIndex:(NSUInteger)section {
-    if (section < [self.sections count]) {
-        return [self.sections objectAtIndex:section];
+- (TableViewSection *)getSectionAtIndex:(NSUInteger)index {
+    if (index < [self.sections count]) {
+        TableViewSection *section = [self.sections objectAtIndex:index];
+        return [section isKindOfClass:[NSNull class]] ? nil : section;
     }
     return nil;
 }
