@@ -60,8 +60,6 @@ Or by using [Alcatraz Package Manager](http://alcatraz.io/).
 ### TableViewSection
 
   - *Need to be subclassed*
-  - `objectClass`
-    - What is the class if the `id` object stored by the section.
   - `- numberOfRows`
     - Return the number of rows that this section should contain.
   - `- createRowAtIndex:`
@@ -71,8 +69,6 @@ Or by using [Alcatraz Package Manager](http://alcatraz.io/).
 ### TableViewRow
 
   - *Need to be subclassed*
-  - `objectClass`
-    - What is the class if the `id` object stored by the row.
 
 ### TableViewCell
 
