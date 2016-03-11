@@ -21,18 +21,9 @@
 - (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
-        if (self.object && self.objectClass) {
-            NSAssert([object isKindOfClass:self.objectClass], @"TableViewSection: object need to be of class %@",
-                     self.objectClass);
-        }
         [self setObject:object];
     }
     return self;
-}
-
-- (Class)objectClass {
-    NSAssert(NO, @"TableViewSection: objectClass: need to be implemented by subclass");
-    return nil;
 }
 
 - (NSUInteger)numberOfRows {

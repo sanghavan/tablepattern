@@ -10,14 +10,13 @@
 
 @class TableViewCell, TableViewDataSource, TableViewSection;
 
-@interface TableViewRow : UIViewController
+@interface TableViewRow <ObjectType> : UIViewController
 
-@property(nonatomic, strong) id object;
+@property(nonatomic, strong) ObjectType object;
 @property(nonatomic, assign) NSUInteger index;
 @property(nonatomic, readonly) Class cellClass;
-@property(nonatomic, readonly) Class objectClass;
 
-- (instancetype)initWithObject:(id)object;
+- (instancetype)initWithObject:(ObjectType)object;
 
 - (void)willDisplayCell:(TableViewCell *)cell
               inSection:(TableViewSection *)section

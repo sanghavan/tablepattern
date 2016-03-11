@@ -16,10 +16,6 @@
 - (instancetype)initWithObject:(id)object {
     self = [super init];
     if (self) {
-        if (self.object && self.objectClass) {
-            NSAssert([object isKindOfClass:self.objectClass], @"TableViewRow: object need to be of class %@",
-                     self.objectClass);
-        }
         [self setObject:object];
     }
     return self;
@@ -29,11 +25,6 @@
     NSString *className = NSStringFromClass([self class]);
     className = [className stringByReplacingOccurrencesOfString:@"Row" withString:@"Cell"];
     return NSClassFromString(className);
-}
-
-- (Class)objectClass {
-    NSAssert(NO, @"TableViewRow: objectClass: need to be implemented by subclass");
-    return nil;
 }
 
 #pragma mark - TableView

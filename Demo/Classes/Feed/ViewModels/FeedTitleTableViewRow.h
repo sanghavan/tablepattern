@@ -8,7 +8,7 @@
 
 #import <TablePattern/TablePattern.h>
 
-@interface FeedTitleTableViewRow : TableViewRow
+@interface FeedTitleTableViewRow : TableViewRow <NSString *>
 
 - (void)alert;
 

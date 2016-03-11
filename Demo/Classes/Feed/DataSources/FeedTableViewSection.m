@@ -27,10 +27,6 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 
 @implementation FeedTableViewSection
 
-- (Class)objectClass {
-    return [FeedItem class];
-}
-
 - (NSUInteger)numberOfRows {
     return FeedRowCount;
 }
@@ -62,9 +58,7 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 - (void)toggleHideDescriptionInDataSource:(TableViewDataSource *)dataSource {
     [self setHideDesc:!self.isDescHidden];
     [self reloadRowAtIndex:FeedRowDesc inDataSource:dataSource withRowAnimation:UITableViewRowAnimationFade];
-    [self reloadRowAtIndex:FeedRowButton
-                      inDataSource:dataSource
-                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self reloadRowAtIndex:FeedRowButton inDataSource:dataSource withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

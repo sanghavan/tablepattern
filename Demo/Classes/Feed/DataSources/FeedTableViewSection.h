@@ -8,7 +8,9 @@
 
 #import <TablePattern/TablePattern.h>
 
-@interface FeedTableViewSection : TableViewSection
+#import "FeedItem.h"
+
+@interface FeedTableViewSection : TableViewSection <FeedItem *>
 
 - (void)toggleHideDescriptionInDataSource:(TableViewDataSource *)dataSource;
 

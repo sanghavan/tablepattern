@@ -12,12 +12,8 @@
 
 @implementation FeedTitleTableViewRow
 
-- (Class)objectClass {
-    return [NSString class];
-}
-
 - (void)didSelectCell:(UITableViewCell *)cell
-  inSection:(TableViewSection *)section
+            inSection:(TableViewSection *)section
          inDataSource:(TableViewDataSource *)dataSource {
     DetailViewController *detailViewController = [[DetailViewController alloc] initWithTitle:self.object];
     [self.navigationController pushViewController:detailViewController animated:YES];
