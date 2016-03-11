@@ -4,6 +4,6 @@
 
 #import <TablePattern/TablePattern.h>
 
-@interface ___FILEBASENAMEASIDENTIFIER___ : TableViewSection
+@interface ___FILEBASENAMEASIDENTIFIER___ : TableViewSection <<#(ObjectType) #>>
 
 @end

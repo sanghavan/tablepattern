@@ -4,6 +4,6 @@
 
 #import <TablePattern/TablePattern.h>
 
-@interface ___FILEBASENAMEASIDENTIFIER___ : TableViewRow
+@interface ___FILEBASENAMEASIDENTIFIER___ : TableViewRow <<#(ObjectType) #>>
 
 @end
