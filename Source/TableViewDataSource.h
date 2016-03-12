@@ -21,12 +21,12 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 
 @property(nonatomic, readonly) UITableView *tableView;
 @property(nonatomic, strong) UIViewController<TableViewDataSourceParentViewController> *tableViewController;
+@property(nonatomic, assign, getter=isLoading) BOOL loading;
 @property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign, getter=isLoadingIndicatorEnabled) BOOL enableLoadingIndicator;
 @property(nonatomic, assign) NSUInteger paginationPage;
 @property(nonatomic, assign) NSUInteger paginationLimit;
 @property(nonatomic, readonly) NSUInteger numberOfSections;
-@property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 - (void)resetData;
 - (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;

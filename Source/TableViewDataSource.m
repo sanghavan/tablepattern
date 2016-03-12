@@ -52,7 +52,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setLoading:(BOOL)loading {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
-        [self.loadingSection setLoading:loading inDataSource:self];
+        [self.loadingSection setLoading:self.isLoading inDataSource:self];
     }
     [self setupData];
 }
@@ -80,6 +80,10 @@ static NSString *const kEmptyCellReuseIdentifier;
     if (self.isPaginationEnabled) {
         NSAssert(self.paginationLimit > 0,
                  @"TableViewDataSource: reloadData: need to specify paginationLimit if you're going to use pagination");
+        if (self.paginationPage == kPaginationPageDisabled) {
+            [self setLoading:NO];
+            return;
+        }
         [self loadPaginatedDataInPage:self.paginationPage
                             withLimit:self.paginationLimit
                          onCompletion:^(BOOL hasMore) {
