@@ -7,6 +7,8 @@
 #import "LoadingTableViewRow.h"
 #import "TableViewDataSource.h"
 
+static CGFloat const kHeight = 44.0f;
+
 @interface LoadingTableViewCell ()
 
 @property(nonatomic, readonly) UIActivityIndicatorView *activityIndicatorView;
@@ -38,7 +40,7 @@
 - (UIActivityIndicatorView *)activityIndicatorView {
     if (!_activityIndicatorView) {
         _activityIndicatorView =
-            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     }
     return _activityIndicatorView;
 }
@@ -46,13 +48,20 @@
 #pragma mark - TableViewCell
 
 - (void)setupInRow:(LoadingTableViewRow *)row {
-    [self.activityIndicatorView setColor:[TableViewDataSource loadingIndicatorTintColor]];
+    [self.activityIndicatorView setColor:row.color];
+    [self.activityIndicatorView setTransform:CGAffineTransformIdentity];
+    [self.activityIndicatorView setTransform:CGAffineTransformMakeScale(row.size ?: 0.5f, row.size ?: 0.5f)];
+
     [self.activityIndicatorView setHidden:!row.isLoading];
     if (self.activityIndicatorView.isHidden) {
         [self.activityIndicatorView stopAnimating];
     } else {
         [self.activityIndicatorView startAnimating];
     }
+}
+
++ (CGFloat)heightInRow:(LoadingTableViewRow *)row {
+    return kHeight + 2 * row.padding;
 }
 
 @end

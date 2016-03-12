@@ -7,6 +7,9 @@
 @interface LoadingTableViewSection : TableViewSection
 
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
+@property(nonatomic, assign) CGFloat size;
+@property(nonatomic, assign) CGFloat padding;
+@property(nonatomic, strong) UIColor *color;
 
 - (void)setLoading:(BOOL)loading inDataSource:(TableViewDataSource *)dataSource;
 

@@ -19,14 +19,19 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 
 @interface TableViewDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, readonly) UITableView *tableView;
 @property(nonatomic, strong) UIViewController<TableViewDataSourceParentViewController> *tableViewController;
+@property(nonatomic, readonly) UITableView *tableView;
+@property(nonatomic, readonly) NSUInteger numberOfSections;
+
 @property(nonatomic, assign, getter=isLoading) BOOL loading;
-@property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign, getter=isLoadingIndicatorEnabled) BOOL enableLoadingIndicator;
+@property(nonatomic, assign) CGFloat loadingIndicatorSize;
+@property(nonatomic, assign) CGFloat loadingIndicatorPadding;
+@property(nonatomic, strong) UIColor *loadingIndicatorColor;
+
+@property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign) NSUInteger paginationPage;
 @property(nonatomic, assign) NSUInteger paginationLimit;
-@property(nonatomic, readonly) NSUInteger numberOfSections;
 
 - (void)resetData;
 - (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
@@ -41,7 +46,10 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 - (TableViewSection *)getSectionAtIndex:(NSUInteger)index;
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath;
 
-+ (UIColor *)loadingIndicatorTintColor;
-+ (void)setLoadingIndicatorTintColor:(UIColor *)tintColor;
+#pragma mark - Static
+
++ (void)setLoadingIndicatorSize:(CGFloat)size;
++ (void)setLoadingIndicatorPadding:(CGFloat)padding;
++ (void)setLoadingIndicatorColor:(UIColor *)color;
 
 @end

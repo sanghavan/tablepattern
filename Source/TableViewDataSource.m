@@ -13,7 +13,9 @@
 
 #define weaken(object, newName) __typeof__(object) __weak newName = object
 
-static UIColor *_loadingIndicatorTintColor;
+static CGFloat __loadingIndicatorSize;
+static CGFloat __loadingIndicatorPadding;
+static UIColor *__loadingIndicatorColor;
 static NSUInteger const kPaginationPageDefault = 1;
 static NSUInteger const kPaginationPageDisabled = 0;
 
@@ -240,6 +242,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (self.isLoadingIndicatorEnabled) {
         [self.loadingSection setIndex:[sections count]];
+        [self.loadingSection setSize:self.loadingIndicatorSize ?: __loadingIndicatorSize];
+        [self.loadingSection setPadding:self.loadingIndicatorPadding ?: __loadingIndicatorPadding];
+        [self.loadingSection setColor:self.loadingIndicatorColor ?: __loadingIndicatorColor];
+        [self.loadingSection setupRows];
         [sections addObject:self.loadingSection];
     }
 
@@ -261,12 +267,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Static
 
-+ (UIColor *)loadingIndicatorTintColor {
-    return _loadingIndicatorTintColor;
++ (void)setLoadingIndicatorSize:(CGFloat)size {
+    __loadingIndicatorSize = size;
 }
 
-+ (void)setLoadingIndicatorTintColor:(UIColor *)tintColor {
-    _loadingIndicatorTintColor = tintColor;
++ (void)setLoadingIndicatorPadding:(CGFloat)padding {
+    __loadingIndicatorPadding = padding;
+}
+
++ (void)setLoadingIndicatorColor:(UIColor *)color {
+    __loadingIndicatorColor = color;
 }
 
 @end
