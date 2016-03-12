@@ -6,10 +6,4 @@
 
 @implementation ___FILEBASENAMEASIDENTIFIER___
 
-#pragma mark - TableViewRow
-
-- (Class)objectClass {
-    return <#(Class) #>;
-}
-
 @end

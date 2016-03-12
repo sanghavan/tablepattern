@@ -8,10 +8,6 @@
 
 #pragma mark - TableViewSection
 
-- (Class)objectClass {
-    return <#(Class) #>;
-}
-
 - (NSUInteger)numberOfRows {
     return <#(NSUInteger) #>;
 }

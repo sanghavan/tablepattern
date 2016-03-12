@@ -17,11 +17,13 @@
 
 #pragma mark - TableViewDataSource
 
+// NOTE: remove if you don't have any data to fetch, or if you support pagination
 - (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
     <#TODO : Load the data #>;
     completion();
 }
 
+// NOTE: remove if you don't have any data to fetch, or if you don't support pagination
 - (void)loadPaginatedDataInPage:(NSUInteger)page
                       withLimit:(NSUInteger)limit
                    onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
