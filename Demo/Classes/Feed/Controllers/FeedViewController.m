@@ -12,8 +12,8 @@
 
 @implementation FeedViewController
 
-- (instancetype)initWithTableViewStyle:(UITableViewStyle)tableViewStyle {
-    self = [super initWithTableViewStyle:tableViewStyle];
+- (instancetype)init {
+    self = [super initWithTableViewStyle:UITableViewStylePlain];
     if (self) {
         [self setDataSource:[[FeedTableViewDataSource alloc] init]];
     }
@@ -30,7 +30,7 @@
     static dispatch_once_t onceToken;
     static FeedViewController *sharedInstance;
     dispatch_once(&onceToken, ^{
-      sharedInstance = [[FeedViewController alloc] initWithTableViewStyle:UITableViewStyleGrouped];
+      sharedInstance = [[FeedViewController alloc] init];
     });
     return sharedInstance;
 }

@@ -27,7 +27,7 @@
   "subspecs": [
     {
       "name": "ObjC",
-      "source_files": "Source/*.{h,m}"
+      "source_files": "Source/**/*.{h,m}"
     }
   ]
 }

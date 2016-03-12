@@ -8,7 +8,9 @@
 
 #import "TableViewDataSource.h"
 
+#import "LoadingTableViewSection.h"
 #import "TableViewCell.h"
+
 #define weaken(object, newName) __typeof__(object) __weak newName = object
 
 static NSUInteger const kPaginationPageDefault = 1;
@@ -19,17 +21,39 @@ static NSString *const kEmptyCellReuseIdentifier;
 @interface TableViewDataSource ()
 
 @property(nonatomic, strong) NSArray<TableViewSection *> *sections;
+@property(nonatomic, readonly) LoadingTableViewSection *loadingSection;
 
 @end
 
 @implementation TableViewDataSource
 
+@synthesize loadingSection = _loadingSection;
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self setEnableLoadingIndicator:YES];
+    }
+    return self;
+}
+
 - (UITableView *)tableView {
     return self.tableViewController.tableView;
 }
 
+- (LoadingTableViewSection *)loadingSection {
+    if (!_loadingSection) {
+        _loadingSection = [[LoadingTableViewSection alloc] initWithObject:nil];
+    }
+    return _loadingSection;
+}
+
 - (void)setLoading:(BOOL)loading {
     _loading = loading;
+    if (self.isLoadingIndicatorEnabled) {
+        [self.loadingSection setLoading:loading inDataSource:self];
+    }
+    [self setupData];
 }
 
 #pragma mark - TableViewDataSource
@@ -49,7 +73,9 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
+
     [self setLoading:YES];
+
     if (self.isPaginationEnabled) {
         NSAssert(self.paginationLimit > 0,
                  @"TableViewDataSource: reloadData: need to specify paginationLimit if you're going to use pagination");
@@ -57,14 +83,14 @@ static NSString *const kEmptyCellReuseIdentifier;
                             withLimit:self.paginationLimit
                          onCompletion:^(BOOL hasMore) {
                            [weakSelf setPaginationPage:hasMore ? weakSelf.paginationPage + 1 : kPaginationPageDisabled];
-                           [weakSelf setupData];
+                           [weakSelf setLoading:NO];
                            if (completion) {
                                completion();
                            }
                          }];
     } else {
         [self loadDataOnCompletion:^{
-          [weakSelf setupData];
+          [weakSelf setLoading:NO];
           if (completion) {
               completion();
           }
@@ -75,17 +101,18 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setupData {
     [self setupSections];
     [self.tableView reloadData];
-    [self setLoading:NO];
 }
 
 - (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
-    NSAssert(NO, @"TableViewDataSource: loadData: need to be implemented by subclass");
+    NSLog(@"WARNING: TableViewDataSource: loadData: should be implemented by subclass");
+    completion();
 }
 
 - (void)loadPaginatedDataInPage:(NSUInteger)page
                       withLimit:(NSUInteger)limit
                    onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
-    NSAssert(NO, @"TableViewDataSource: loadPaginatedData: need to be implemented by subclass");
+    NSLog(@"WARNING: TableViewDataSource: loadPaginatedDataInPage: should be implemented by subclass");
+    completion(NO);
 }
 
 - (NSUInteger)numberOfSections {
@@ -105,7 +132,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self numberOfSections];
+    return self.numberOfSections + (self.isLoadingIndicatorEnabled ? 1 : 0);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,7 +178,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.tableViewController addChildViewController:row];
     }
 
-    if (indexPath.section == [self numberOfSections] - 1 && indexPath.row == [section numberOfRows] - 1 &&
+    if (indexPath.section == self.numberOfSections - 1 && indexPath.row == [section numberOfRows] - 1 &&
         self.paginationPage != kPaginationPageDisabled && !self.isLoading) {
         [self reloadData];
     }
@@ -199,12 +226,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)setupSections {
     NSMutableArray *sections = [NSMutableArray array];
-    for (int index = 0; index < [self numberOfSections]; index++) {
+    for (int index = 0; index < self.numberOfSections; index++) {
         TableViewSection *section = [self createSectionAtIndex:index];
         [section setIndex:index];
         [section setupRows];
         [sections addObject:section ?: [NSNull null]];
     }
+
+    if (self.isLoadingIndicatorEnabled) {
+        [self.loadingSection setIndex:[sections count]];
+        [sections addObject:self.loadingSection];
+    }
+
     [self setSections:sections];
 }
 
