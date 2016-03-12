@@ -13,6 +13,7 @@
 
 #define weaken(object, newName) __typeof__(object) __weak newName = object
 
+static UIColor *_loadingIndicatorTintColor;
 static NSUInteger const kPaginationPageDefault = 1;
 static NSUInteger const kPaginationPageDisabled = 0;
 
@@ -252,6 +253,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
     return [section getRowAtIndex:indexPath.row];
+}
+
+#pragma mark - Static
+
++ (UIColor *)loadingIndicatorTintColor {
+    return _loadingIndicatorTintColor;
+}
+
++ (void)setLoadingIndicatorTintColor:(UIColor *)tintColor {
+    _loadingIndicatorTintColor = tintColor;
 }
 
 @end

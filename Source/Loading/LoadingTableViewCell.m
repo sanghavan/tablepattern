@@ -5,6 +5,7 @@
 #import "LoadingTableViewCell.h"
 
 #import "LoadingTableViewRow.h"
+#import "TableViewDataSource.h"
 
 @interface LoadingTableViewCell ()
 
@@ -45,6 +46,7 @@
 #pragma mark - TableViewCell
 
 - (void)setupInRow:(LoadingTableViewRow *)row {
+    [self.activityIndicatorView setColor:[TableViewDataSource loadingIndicatorTintColor]];
     [self.activityIndicatorView setHidden:!row.isLoading];
     if (self.activityIndicatorView.isHidden) {
         [self.activityIndicatorView stopAnimating];

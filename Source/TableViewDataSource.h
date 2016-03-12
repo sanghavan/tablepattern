@@ -41,4 +41,7 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 - (TableViewSection *)getSectionAtIndex:(NSUInteger)index;
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath;
 
++ (UIColor *)loadingIndicatorTintColor;
++ (void)setLoadingIndicatorTintColor:(UIColor *)tintColor;
+
 @end
