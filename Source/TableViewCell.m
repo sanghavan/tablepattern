@@ -30,11 +30,11 @@ static CGFloat const kHeight = 44.0f;
 }
 
 - (void)setupInRow:(TableViewRow *)row
-           inSection:(TableViewSection *)section
-        inDataSource:(TableViewDataSource *)dataSource {
+         inSection:(TableViewSection *)section
+      inDataSource:(TableViewDataSource *)dataSource {
     _dataSource = dataSource;
     _row = row;
-    _rowSection = section;
+    _section = section;
     return [self setupInRow:row inSection:section];
 }
 
@@ -47,8 +47,8 @@ static CGFloat const kHeight = 44.0f;
 }
 
 + (CGFloat)heightInRow:(TableViewRow *)row
-               inSection:(TableViewSection *)section
-            inDataSource:(TableViewDataSource *)dataSource {
+             inSection:(TableViewSection *)section
+          inDataSource:(TableViewDataSource *)dataSource {
     return [self heightInRow:row inSection:section];
 }
 

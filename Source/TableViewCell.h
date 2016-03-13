@@ -13,7 +13,7 @@
 @interface TableViewCell : UITableViewCell
 
 @property(nonatomic, readonly) TableViewRow *row;
-@property(nonatomic, readonly) TableViewSection *rowSection;
+@property(nonatomic, readonly) TableViewSection *section;
 @property(nonatomic, readonly) TableViewDataSource *dataSource;
 
 - (void)setupInRow:(TableViewRow *)row;
