@@ -52,11 +52,12 @@ static CGFloat const kHeight = 44.0f;
     [self.activityIndicatorView setTransform:CGAffineTransformIdentity];
     [self.activityIndicatorView setTransform:CGAffineTransformMakeScale(row.size ?: 0.5f, row.size ?: 0.5f)];
 
-    [self.activityIndicatorView setHidden:!row.isLoading];
-    if (self.activityIndicatorView.isHidden) {
-        [self.activityIndicatorView stopAnimating];
-    } else {
+    if (row.isLoading) {
+        [self.activityIndicatorView setHidden:NO];
         [self.activityIndicatorView startAnimating];
+    } else {
+        [self.activityIndicatorView setHidden:YES];
+        [self.activityIndicatorView stopAnimating];
     }
 }
 

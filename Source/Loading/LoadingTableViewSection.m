@@ -8,7 +8,7 @@
 
 @implementation LoadingTableViewSection
 
-- (void)setLoading:(BOOL)loading inDataSource:(TableViewDataSource *)dataSource {
+- (void)setLoading:(BOOL)loading {
     _loading = loading;
     [self setupRows];
 }

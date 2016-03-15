@@ -54,7 +54,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setLoading:(BOOL)loading {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
-        [self.loadingSection setLoading:self.isLoading inDataSource:self];
+        [self.loadingSection setLoading:self.isLoading];
     }
     [self setupData];
 }
@@ -135,7 +135,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self getSectionAtIndex:section] numberOfRows];
+    return [self getSectionAtIndex:section].numberOfRows;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -185,7 +185,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.tableViewController addChildViewController:row];
     }
 
-    if (indexPath.section == self.numberOfSections - 1 && indexPath.row == [section numberOfRows] - 1 &&
+    if (indexPath.section == self.numberOfSections && indexPath.row == section.numberOfRows - 1 &&
         self.paginationPage != kPaginationPageDisabled && !self.isLoading) {
         [self reloadData];
     }
