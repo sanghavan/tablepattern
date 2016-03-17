@@ -10,6 +10,8 @@
 
 #import "TableViewDataSource.h"
 
+#define weaken(object, newName) __typeof__(object) __weak newName = object
+
 @interface TableViewSection ()
 
 @property(nonatomic, strong) NSArray<TableViewRow *> *rows;
@@ -90,15 +92,27 @@
 - (void)reloadRowAtIndex:(NSUInteger)index
             inDataSource:(TableViewDataSource *)dataSource
         withRowAnimation:(UITableViewRowAnimation)animation {
-    TableViewRow *row = [self createRowAtIndex:index];
-    [row setIndex:index];
+    [self reloadRowsAtIndexSet:[NSIndexSet indexSetWithIndex:index] inDataSource:dataSource withRowAnimation:animation];
+}
 
-    NSMutableArray *rows = [self.rows mutableCopy];
-    [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
-    [self setRows:rows];
+- (void)reloadRowsAtIndexSet:(NSIndexSet *)indexSet
+                inDataSource:(TableViewDataSource *)dataSource
+            withRowAnimation:(UITableViewRowAnimation)animation {
+    weaken(self, weakSelf);
+    NSMutableArray<NSIndexPath *> *indexPaths = [[NSMutableArray alloc] init];
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *_Nonnull stop) {
+      TableViewRow *row = [self createRowAtIndex:index];
+      [row setIndex:index];
 
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.index];
-    [dataSource.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:animation];
+      NSMutableArray *rows = [self.rows mutableCopy];
+      [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
+      [weakSelf setRows:rows];
+
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.index];
+      [indexPaths addObject:indexPath];
+    }];
+
+    [dataSource.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 }
 
 @end
