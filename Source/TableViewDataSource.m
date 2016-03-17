@@ -16,8 +16,8 @@
 static CGFloat __loadingIndicatorSize;
 static CGFloat __loadingIndicatorPadding;
 static UIColor *__loadingIndicatorColor;
-static NSUInteger const kPaginationPageDefault = 1;
-static NSUInteger const kPaginationPageDisabled = 0;
+static NSUInteger const kPaginationPageDefault = 0;
+static NSUInteger const kPaginationPageDisabled = -1;
 
 static NSString *const kEmptyCellReuseIdentifier;
 
@@ -54,49 +54,39 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setLoading:(BOOL)loading {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
-        [self.loadingSection setLoading:self.isLoading];
+        [self.loadingSection setLoading:_loading];
     }
     [self setupData];
 }
 
+- (BOOL)isPaginationEnabled {
+    return _enablePagination && self.paginationPage != kPaginationPageDisabled;
+}
+
 #pragma mark - TableViewDataSource
 
-- (void)resetData {
-    [self resetDataOnCompletion:nil];
-}
-
-- (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
+- (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     [self setPaginationPage:self.isPaginationEnabled ? kPaginationPageDefault : kPaginationPageDisabled];
-    [self reloadDataOnCompletion:completion];
+    [self setSections:@[]];
+    [self loadDataOnCompletion:completion];
 }
 
-- (void)reloadData {
-    [self reloadDataOnCompletion:nil];
+- (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
+    [self setupData];
+    if (completion) {
+        completion();
+    }
 }
 
-- (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
+- (void)loadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
-
-    [self setLoading:YES];
-
     if (self.isPaginationEnabled) {
         NSAssert(self.paginationLimit > 0,
-                 @"TableViewDataSource: reloadData: need to specify paginationLimit if you're going to use pagination");
-        if (self.paginationPage == kPaginationPageDisabled) {
-            [self setLoading:NO];
-            return;
-        }
-        [self loadPaginatedDataInPage:self.paginationPage
-                            withLimit:self.paginationLimit
-                         onCompletion:^(BOOL hasMore) {
-                           [weakSelf setPaginationPage:hasMore ? weakSelf.paginationPage + 1 : kPaginationPageDisabled];
-                           [weakSelf setLoading:NO];
-                           if (completion) {
-                               completion();
-                           }
-                         }];
-    } else {
-        [self loadDataOnCompletion:^{
+                 @"TableViewDataSource: need to specify paginationLimit if you're going to use pagination");
+        [self loadNextPageOnCompletion:completion];
+    } else if ([self.sections count] == 0) {
+        [self setLoading:YES];
+        [self fetchDataOnCompletion:^{
           [weakSelf setLoading:NO];
           if (completion) {
               completion();
@@ -105,20 +95,37 @@ static NSString *const kEmptyCellReuseIdentifier;
     }
 }
 
+- (void)loadNextPageOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
+    weaken(self, weakSelf);
+    [self setLoading:YES];
+    [self setPaginationPage:self.paginationPage + 1];
+    [self fetchDataOnPage:self.paginationPage
+                withLimit:self.paginationLimit
+             onCompletion:^(BOOL hasMore) {
+               [weakSelf setLoading:NO];
+               if (!hasMore) {
+                   [weakSelf setPaginationPage:kPaginationPageDisabled];
+               }
+               if (completion) {
+                   completion();
+               }
+             }];
+}
+
 - (void)setupData {
     [self setupSections];
     [self.tableView reloadData];
 }
 
-- (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
-    NSLog(@"WARNING: TableViewDataSource: loadData: should be implemented by subclass");
+- (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
+    NSLog(@"WARNING: TableViewDataSource: fetchDataOnCompletion: should be implemented by subclass");
     completion();
 }
 
-- (void)loadPaginatedDataInPage:(NSUInteger)page
-                      withLimit:(NSUInteger)limit
-                   onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
-    NSLog(@"WARNING: TableViewDataSource: loadPaginatedDataInPage: should be implemented by subclass");
+- (void)fetchDataOnPage:(NSUInteger)page
+              withLimit:(NSUInteger)limit
+           onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
+    NSLog(@"WARNING: TableViewDataSource: fetchDataOnPage: should be implemented by subclass");
     completion(NO);
 }
 
@@ -186,8 +193,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 
     if (indexPath.section == self.numberOfSections && indexPath.row == section.numberOfRows - 1 &&
-        self.paginationPage != kPaginationPageDisabled && !self.isLoading) {
-        [self reloadData];
+        self.isPaginationEnabled && !self.isLoading) {
+        [self loadNextPageOnCompletion:nil];
     }
 }
 

@@ -21,35 +21,18 @@ static CGFloat const kHeight = 44.0f;
     return self;
 }
 
-- (void)setupInRow:(TableViewRow *)row {
-    // Do nothing...
-}
-
-- (void)setupInRow:(TableViewRow *)row inSection:(TableViewSection *)section {
-    return [self setupInRow:row];
-}
-
 - (void)setupInRow:(TableViewRow *)row
          inSection:(TableViewSection *)section
       inDataSource:(TableViewDataSource *)dataSource {
     _dataSource = dataSource;
     _row = row;
     _section = section;
-    return [self setupInRow:row inSection:section];
-}
-
-+ (CGFloat)heightInRow:(TableViewRow *)row {
-    return kHeight;
-}
-
-+ (CGFloat)heightInRow:(TableViewRow *)row inSection:(TableViewSection *)section {
-    return [self heightInRow:row];
 }
 
 + (CGFloat)heightInRow:(TableViewRow *)row
              inSection:(TableViewSection *)section
           inDataSource:(TableViewDataSource *)dataSource {
-    return [self heightInRow:row inSection:section];
+    return kHeight;
 }
 
 + (instancetype)dequeueOrCreateReusableCellInDataSource:(TableViewDataSource *)dataSource {

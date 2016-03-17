@@ -33,14 +33,12 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 @property(nonatomic, assign) NSUInteger paginationPage;
 @property(nonatomic, assign) NSUInteger paginationLimit;
 
-- (void)resetData;
-- (void)resetDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
-- (void)reloadData;
-- (void)reloadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
-- (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion;
-- (void)loadPaginatedDataInPage:(NSUInteger)page
-                      withLimit:(NSUInteger)limit
-                   onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion;
+- (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
+- (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
+- (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion;
+- (void)fetchDataOnPage:(NSUInteger)page
+              withLimit:(NSUInteger)limit
+           onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion;
 
 - (TableViewSection *)createSectionAtIndex:(NSUInteger)index;
 - (TableViewSection *)getSectionAtIndex:(NSUInteger)index;

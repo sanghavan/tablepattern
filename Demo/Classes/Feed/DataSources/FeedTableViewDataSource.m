@@ -23,17 +23,17 @@
     self = [super init];
     if (self) {
         [self setEnablePagination:YES];
-        [self setPaginationLimit:2];
+        [self setPaginationLimit:3];
     }
     return self;
 }
 
-- (void)resetData {
+- (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     [self setItems:@[]];
-    [super resetData];
+    [super resetAndLoadDataOnCompletion:completion];
 }
 
-- (void)loadDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
+- (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
     [self setItems:@[
         [[FeedItem alloc] initWithTitle:@"Carrot" desc:@"An orange vegetable"],
         [[FeedItem alloc] initWithTitle:@"Tomato" desc:@"A red vegetable"],
@@ -45,9 +45,9 @@
     completion();
 }
 
-- (void)loadPaginatedDataInPage:(NSUInteger)page
-                      withLimit:(NSUInteger)limit
-                   onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
+- (void)fetchDataOnPage:(NSUInteger)page
+              withLimit:(NSUInteger)limit
+           onCompletion:(TableViewDataSourceLoadPaginatedDataCompletion)completion {
     switch (page) {
         case 1: {
             // NOTE(materik): artificial delay
@@ -56,6 +56,7 @@
                              [self setItems:[self.items arrayByAddingObjectsFromArray:@[
                                        [[FeedItem alloc] initWithTitle:@"Carrot" desc:@"An orange vegetable"],
                                        [[FeedItem alloc] initWithTitle:@"Tomato" desc:@"A red vegetable"],
+                                       [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
                                    ]]];
                              completion(YES);
                            });
@@ -68,6 +69,7 @@
                              [self setItems:[self.items arrayByAddingObjectsFromArray:@[
                                        [[FeedItem alloc] initWithTitle:@"Cucumber" desc:@"A green vegetable"],
                                        [[FeedItem alloc] initWithTitle:@"Orange" desc:@"An orange fruit"],
+                                       [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
                                    ]]];
                              completion(YES);
                            });
@@ -79,6 +81,20 @@
                            ^{
                              [self setItems:[self.items arrayByAddingObjectsFromArray:@[
                                        [[FeedItem alloc] initWithTitle:@"Apple" desc:@"An red/green fruit"],
+                                       [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
+                                       [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
+                                   ]]];
+                             completion(YES);
+                           });
+            break;
+        }
+        case 4: {
+            // NOTE(materik): artificial delay
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(),
+                           ^{
+                             [self setItems:[self.items arrayByAddingObjectsFromArray:@[
+                                       [[FeedItem alloc] initWithTitle:@"Carrot" desc:@"An orange vegetable"],
+                                       [[FeedItem alloc] initWithTitle:@"Tomato" desc:@"A red vegetable"],
                                        [[FeedItem alloc] initWithTitle:@"Banana" desc:@"An yellow fruit"],
                                    ]]];
                              completion(YES);

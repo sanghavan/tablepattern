@@ -14,9 +14,6 @@
 @property(nonatomic, assign) UITableViewStyle tableViewStyle;
 
 - (instancetype)initWithTableViewStyle:(UITableViewStyle)tableViewStyle;
-- (void)resetData;
-- (void)reloadData;
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 

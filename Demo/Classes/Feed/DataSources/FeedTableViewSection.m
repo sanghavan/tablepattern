@@ -32,7 +32,6 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
 }
 
 - (TableViewRow *)createRowAtIndex:(NSUInteger)row {
-    FeedItem *feedItem = (FeedItem *)self.object;
     switch ((FeedRow)row) {
         case FeedRowButton: {
             NSString *title = self.isDescHidden ? @"+ Show Desc" : @"- Hide Desc";
@@ -45,10 +44,10 @@ typedef NS_ENUM(NSUInteger, FeedRow) {
             if (self.isDescHidden) {
                 return nil;
             }
-            return [[FeedTitleTableViewRow alloc] initWithObject:feedItem.desc];
+            return [[FeedTitleTableViewRow alloc] initWithObject:self.object.desc];
         }
         case FeedRowTitle: {
-            return [[FeedTitleTableViewRow alloc] initWithObject:feedItem.title];
+            return [[FeedTitleTableViewRow alloc] initWithObject:self.object.title];
         }
     }
 }

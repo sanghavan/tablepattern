@@ -13,7 +13,7 @@
 @implementation FeedViewController
 
 - (instancetype)init {
-    self = [super initWithTableViewStyle:UITableViewStylePlain];
+    self = [super initWithTableViewStyle:UITableViewStyleGrouped];
     if (self) {
         [self setDataSource:[[FeedTableViewDataSource alloc] init]];
     }

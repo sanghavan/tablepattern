@@ -16,13 +16,9 @@
 @property(nonatomic, readonly) TableViewSection *section;
 @property(nonatomic, readonly) TableViewDataSource *dataSource;
 
-- (void)setupInRow:(TableViewRow *)row;
-- (void)setupInRow:(TableViewRow *)row inSection:(TableViewSection *)section;
 - (void)setupInRow:(TableViewRow *)row
          inSection:(TableViewSection *)section
       inDataSource:(TableViewDataSource *)dataSource;
-+ (CGFloat)heightInRow:(TableViewRow *)row;
-+ (CGFloat)heightInRow:(TableViewRow *)row inSection:(TableViewSection *)section;
 + (CGFloat)heightInRow:(TableViewRow *)row
              inSection:(TableViewSection *)section
           inDataSource:(TableViewDataSource *)dataSource;

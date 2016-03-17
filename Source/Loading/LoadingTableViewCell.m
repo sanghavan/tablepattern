@@ -7,6 +7,8 @@
 #import "LoadingTableViewRow.h"
 #import "TableViewDataSource.h"
 
+#define weaken(object, newName) __typeof__(object) __weak newName = object
+
 static CGFloat const kHeight = 44.0f;
 
 @interface LoadingTableViewCell ()
@@ -47,21 +49,30 @@ static CGFloat const kHeight = 44.0f;
 
 #pragma mark - TableViewCell
 
-- (void)setupInRow:(LoadingTableViewRow *)row {
+- (void)setupInRow:(LoadingTableViewRow *)row
+         inSection:(TableViewSection *)section
+      inDataSource:(TableViewDataSource *)dataSource {
+    [super setupInRow:row inSection:section inDataSource:dataSource];
+
     [self.activityIndicatorView setColor:row.color];
     [self.activityIndicatorView setTransform:CGAffineTransformIdentity];
     [self.activityIndicatorView setTransform:CGAffineTransformMakeScale(row.size ?: 0.5f, row.size ?: 0.5f)];
 
-    if (row.isLoading) {
-        [self.activityIndicatorView setHidden:NO];
-        [self.activityIndicatorView startAnimating];
-    } else {
-        [self.activityIndicatorView setHidden:YES];
-        [self.activityIndicatorView stopAnimating];
-    }
+    weaken(self, weakSelf);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (row.isLoading) {
+          [self.activityIndicatorView setHidden:NO];
+          [weakSelf.activityIndicatorView startAnimating];
+      } else {
+          [self.activityIndicatorView setHidden:YES];
+          [weakSelf.activityIndicatorView stopAnimating];
+      }
+    });
 }
 
-+ (CGFloat)heightInRow:(LoadingTableViewRow *)row {
++ (CGFloat)heightInRow:(LoadingTableViewRow *)row
+             inSection:(TableViewSection *)section
+          inDataSource:(TableViewDataSource *)dataSource {
     return kHeight + 2 * row.padding;
 }
 

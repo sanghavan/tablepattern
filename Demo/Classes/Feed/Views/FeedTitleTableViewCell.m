@@ -78,8 +78,9 @@ static CGFloat const kPadding = 10.0f;
 
 #pragma mark - TableViewCell
 
-- (void)setupInRow:(FeedTitleTableViewRow *)row {
-    [super setupInRow:row];
+- (void)setupInRow:(FeedTitleTableViewRow *)row
+         inSection:(TableViewSection *)section
+      inDataSource:(TableViewDataSource *)dataSource {
     [self.label setText:row.object];
 }
 

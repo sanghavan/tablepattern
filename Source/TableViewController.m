@@ -58,10 +58,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (self.isFirstAppearance) {
-        [self resetData];
+        [self resetAndLoadData];
         [self setFirstAppearance:NO];
     } else {
-        [self.tableView reloadData];
+        [self refreshData];
     }
 }
 
@@ -72,12 +72,12 @@
 
 #pragma mark - Action
 
-- (void)resetData {
-    [self.dataSource resetData];
+- (void)resetAndLoadData {
+    [self.dataSource resetAndLoadDataOnCompletion:nil];
 }
 
-- (void)reloadData {
-    [self.dataSource reloadData];
+- (void)refreshData {
+    [self.dataSource refreshDataOnCompletion:nil];
 }
 
 #pragma mark - Views
