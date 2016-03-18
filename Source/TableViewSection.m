@@ -92,27 +92,37 @@
 - (void)reloadRowAtIndex:(NSUInteger)index
             inDataSource:(TableViewDataSource *)dataSource
         withRowAnimation:(UITableViewRowAnimation)animation {
-    [self reloadRowsAtIndexSet:[NSIndexSet indexSetWithIndex:index] inDataSource:dataSource withRowAnimation:animation];
+    [self reloadRowsAtIndexes:@[ @(index) ] inDataSource:dataSource withRowAnimation:animation];
 }
 
-- (void)reloadRowsAtIndexSet:(NSIndexSet *)indexSet
-                inDataSource:(TableViewDataSource *)dataSource
-            withRowAnimation:(UITableViewRowAnimation)animation {
-    weaken(self, weakSelf);
+- (void)reloadRowsAtIndexes:(NSArray<NSNumber *> *)indexes
+               inDataSource:(TableViewDataSource *)dataSource
+           withRowAnimation:(UITableViewRowAnimation)animation {
+    NSMutableArray<NSNumber *> *validIndexes = [[NSMutableArray alloc] init];
+    for (NSNumber *number in indexes) {
+        NSInteger index = [number integerValue];
+        if (index < [dataSource.tableView numberOfRowsInSection:self.index] && index < [self.rows count]) {
+            [validIndexes addObject:number];
+        }
+    }
+
     NSMutableArray<NSIndexPath *> *indexPaths = [[NSMutableArray alloc] init];
-    [indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *_Nonnull stop) {
-      TableViewRow *row = [self createRowAtIndex:index];
-      [row setIndex:index];
+    for (NSNumber *number in validIndexes) {
+        NSInteger index = [number integerValue];
+        TableViewRow *row = [self createRowAtIndex:index];
+        [row setIndex:index];
 
-      NSMutableArray *rows = [self.rows mutableCopy];
-      [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
-      [weakSelf setRows:rows];
+        NSMutableArray *rows = [self.rows mutableCopy];
+        [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
+        [self setRows:rows];
 
-      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.index];
-      [indexPaths addObject:indexPath];
-    }];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:self.index];
+        [indexPaths addObject:indexPath];
+    }
 
-    [dataSource.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
+    if ([indexPaths count]) {
+        [dataSource.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
+    }
 }
 
 @end

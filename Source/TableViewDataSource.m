@@ -52,11 +52,15 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)setLoading:(BOOL)loading {
+    [self setLoading:loading andReuseExistingSections:NO];
+}
+
+- (void)setLoading:(BOOL)loading andReuseExistingSections:(BOOL)reuse {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
         [self.loadingSection setLoading:_loading];
     }
-    [self setupData];
+    [self setupDataAndReuseExistingSections:reuse];
 }
 
 - (BOOL)isPaginationEnabled {
@@ -66,13 +70,12 @@ static NSString *const kEmptyCellReuseIdentifier;
 #pragma mark - TableViewDataSource
 
 - (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
-    [self setPaginationPage:self.isPaginationEnabled ? kPaginationPageDefault : kPaginationPageDisabled];
-    [self setSections:@[]];
+    [self setPaginationPage:_enablePagination ? kPaginationPageDefault : kPaginationPageDisabled];
     [self loadDataOnCompletion:completion];
 }
 
 - (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
-    [self setupData];
+    [self setupDataAndReuseExistingSections:NO];
     if (completion) {
         completion();
     }
@@ -84,7 +87,7 @@ static NSString *const kEmptyCellReuseIdentifier;
         NSAssert(self.paginationLimit > 0,
                  @"TableViewDataSource: need to specify paginationLimit if you're going to use pagination");
         [self loadNextPageOnCompletion:completion];
-    } else if ([self.sections count] == 0) {
+    } else {
         [self setLoading:YES];
         [self fetchDataOnCompletion:^{
           [weakSelf setLoading:NO];
@@ -97,12 +100,12 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)loadNextPageOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
-    [self setLoading:YES];
+    [self setLoading:YES andReuseExistingSections:YES];
     [self setPaginationPage:self.paginationPage + 1];
     [self fetchDataOnPage:self.paginationPage
                 withLimit:self.paginationLimit
              onCompletion:^(BOOL hasMore) {
-               [weakSelf setLoading:NO];
+               [weakSelf setLoading:NO andReuseExistingSections:YES];
                if (!hasMore) {
                    [weakSelf setPaginationPage:kPaginationPageDisabled];
                }
@@ -112,9 +115,11 @@ static NSString *const kEmptyCellReuseIdentifier;
              }];
 }
 
-- (void)setupData {
-    [self setupSections];
-    [self.tableView reloadData];
+- (void)setupDataAndReuseExistingSections:(BOOL)reuse {
+    if (!self.isLoading || [self.sections count] == 0) {
+        [self setupSectionsAndReuseExistingSections:reuse];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
@@ -239,8 +244,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Helper
 
 - (void)setupSections {
+    [self setupSectionsAndReuseExistingSections:NO];
+}
+
+- (void)setupSectionsAndReuseExistingSections:(BOOL)reuse {
     NSMutableArray *sections = [NSMutableArray array];
-    for (int index = 0; index < self.numberOfSections; index++) {
+
+    if (reuse && self.sections) {
+        sections = [self.sections mutableCopy];
+        if (self.isLoadingIndicatorEnabled) {
+            [sections removeLastObject];
+        }
+    }
+
+    for (int index = (int)[sections count]; index < self.numberOfSections; index++) {
         TableViewSection *section = [self createSectionAtIndex:index];
         [section setIndex:index];
         [section setupRows];

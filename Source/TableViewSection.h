@@ -26,9 +26,9 @@
 - (void)reloadRowAtIndex:(NSUInteger)index
             inDataSource:(TableViewDataSource *)dataSource
         withRowAnimation:(UITableViewRowAnimation)animation;
-- (void)reloadRowsAtIndexSet:(NSIndexSet *)indexSet
-                inDataSource:(TableViewDataSource *)dataSource
-            withRowAnimation:(UITableViewRowAnimation)animation;
+- (void)reloadRowsAtIndexes:(NSArray<NSNumber *> *)indexes
+               inDataSource:(TableViewDataSource *)dataSource
+           withRowAnimation:(UITableViewRowAnimation)animation;
 
 - (CGFloat)headerHeightInDataSource:(TableViewDataSource *)dataSource;
 - (UIView *)headerViewInDataSource:(TableViewDataSource *)dataSource;
