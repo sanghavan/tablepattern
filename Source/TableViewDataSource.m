@@ -100,12 +100,15 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)loadNextPageOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     weaken(self, weakSelf);
-    [self setLoading:YES andReuseExistingSections:YES];
+
+    BOOL initialLoad = self.paginationPage == kPaginationPageDefault;
+
+    [self setLoading:YES andReuseExistingSections:!initialLoad];
     [self setPaginationPage:self.paginationPage + 1];
     [self fetchDataOnPage:self.paginationPage
                 withLimit:self.paginationLimit
              onCompletion:^(BOOL hasMore) {
-               [weakSelf setLoading:NO andReuseExistingSections:YES];
+               [weakSelf setLoading:NO andReuseExistingSections:!initialLoad];
                if (!hasMore) {
                    [weakSelf setPaginationPage:kPaginationPageDisabled];
                }
