@@ -120,10 +120,14 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)setupDataAndReuseExistingSections:(BOOL)reuse {
-    if (!self.isLoading || [self.sections count] == 0) {
-        [self setupSectionsAndReuseExistingSections:reuse];
-        [self.tableView reloadData];
+    // NOTE(materik):
+    // * don't want to refresh the table when resetting the view and there are sections in it...
+    if ([self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
+        return;
     }
+
+    [self setupSectionsAndReuseExistingSections:reuse];
+    [self.tableView reloadData];
 }
 
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
