@@ -127,7 +127,14 @@ static NSString *const kEmptyCellReuseIdentifier;
     }
 
     [self setupSectionsAndReuseExistingSections:reuse];
+    [self reloadTableView];
+}
+
+- (void)reloadTableView {
     [self.tableView reloadData];
+    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
+        [self updateCellChildViewControllerAtIndexPath:indexPath];
+    }
 }
 
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
@@ -197,14 +204,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self updateCellChildViewControllerAtIndexPath:indexPath];
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-    if (row) {
-        [row willDisplayCell:(TableViewCell *)cell inSection:section inDataSource:self];
-        [self.tableViewController addChildViewController:section];
-        [self.tableViewController addChildViewController:row];
-    }
-
     if (indexPath.section == (self.numberOfSections - self.paginationLoadNextPageOffset.section) &&
         indexPath.row == (section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row) &&
         self.isPaginationEnabled && !self.isLoading) {
@@ -296,6 +297,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (TableViewRow *)getRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
     return [section getRowAtIndex:indexPath.row];
+}
+
+- (void)updateCellChildViewControllerAtIndexPath:(NSIndexPath *)indexPath {
+    TableViewCell *cell = (TableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+    TableViewRow *row = [section getRowAtIndex:indexPath.row];
+    if (row) {
+        [row willDisplayCell:cell inSection:section inDataSource:self];
+        [self.tableViewController addChildViewController:section];
+        [self.tableViewController addChildViewController:row];
+    }
 }
 
 #pragma mark - Static

@@ -52,6 +52,10 @@
     [dataSource.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:animation];
 }
 
+- (UINavigationController *)navigationController {
+    return [super navigationController] ?: self.parentViewController.navigationController;
+}
+
 #pragma mark - TableViewCell
 
 - (CGFloat)heightInSection:(TableViewSection *)section inDataSource:(TableViewDataSource *)dataSource {
