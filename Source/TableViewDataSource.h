@@ -32,6 +32,7 @@ typedef void (^TableViewDataSourceReloadDataCompletion)();
 @property(nonatomic, assign, getter=isPaginationEnabled) BOOL enablePagination;
 @property(nonatomic, assign) NSUInteger paginationPage;
 @property(nonatomic, assign) NSUInteger paginationLimit;
+@property(nonatomic, strong) NSIndexPath *paginationLoadNextPageOffset;
 
 - (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;
 - (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion;

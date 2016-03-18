@@ -36,6 +36,7 @@ static NSString *const kEmptyCellReuseIdentifier;
     self = [super init];
     if (self) {
         [self setEnableLoadingIndicator:YES];
+        [self setPaginationLoadNextPageOffset:[NSIndexPath indexPathForRow:0 inSection:0]];
     }
     return self;
 }
@@ -200,7 +201,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.tableViewController addChildViewController:row];
     }
 
-    if (indexPath.section == self.numberOfSections && indexPath.row == section.numberOfRows - 1 &&
+    if (indexPath.section == (self.numberOfSections - self.paginationLoadNextPageOffset.section) &&
+        indexPath.row == (section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row) &&
         self.isPaginationEnabled && !self.isLoading) {
         [self loadNextPageOnCompletion:nil];
     }
