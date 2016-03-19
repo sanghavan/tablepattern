@@ -53,7 +53,7 @@
 }
 
 - (UINavigationController *)navigationController {
-    return [super navigationController] ?: self.parentViewController.navigationController;
+    return super.navigationController ?: self.parentViewController.navigationController;
 }
 
 #pragma mark - TableViewCell

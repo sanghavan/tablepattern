@@ -76,7 +76,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
-    [self setupDataAndReuseExistingSections:NO];
+    [self setupDataAndReuseExistingSections:NO force:YES];
     if (completion) {
         completion();
     }
@@ -120,9 +120,13 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)setupDataAndReuseExistingSections:(BOOL)reuse {
+    [self setupDataAndReuseExistingSections:reuse force:NO];
+}
+
+- (void)setupDataAndReuseExistingSections:(BOOL)reuse force:(BOOL)force {
     // NOTE(materik):
     // * don't want to refresh the table when resetting the view and there are sections in it...
-    if ([self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
+    if (!force && [self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
         return;
     }
 
@@ -132,9 +136,9 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)reloadTableView {
     [self.tableView reloadData];
-    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
-        [self updateCellChildViewControllerAtIndexPath:indexPath];
-    }
+    //    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
+    //        [self updateChildViewControllerForCell:nil atIndexPath:indexPath];
+    //    }
 }
 
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
@@ -154,9 +158,19 @@ static NSString *const kEmptyCellReuseIdentifier;
     return 0;
 }
 
-- (TableViewSection *)createSectionAtIndex:(NSUInteger)section {
+- (TableViewSection *)createSectionAtIndex:(NSUInteger)index {
     NSAssert(NO, @"TableViewDataSource: createSectionAtIndex: need to be implemented by subclass");
     return nil;
+}
+
+- (TableViewSection *)_createSectionAtIndex:(NSUInteger)index {
+    TableViewSection *section = [self createSectionAtIndex:index];
+    if (section) {
+        [self.tableViewController addChildViewController:section];
+        [section setIndex:index];
+        [section setupRows];
+    }
+    return section;
 }
 
 #pragma mark - UITableViewDataSource
@@ -204,7 +218,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self updateCellChildViewControllerAtIndexPath:indexPath];
+    //    [self updateChildViewControllerForCell:(TableViewCell *)cell atIndexPath:indexPath];
+
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
     if (indexPath.section == (self.numberOfSections - self.paginationLoadNextPageOffset.section) &&
         indexPath.row == (section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row) &&
@@ -213,21 +228,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-- (void)tableView:(UITableView *)tableView
-    didEndDisplayingCell:(UITableViewCell *)cell
-       forRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-    if (row) {
-        [row didEndDisplayingCell:(TableViewCell *)cell inSection:section inDataSource:self];
-        [row removeFromParentViewController];
-
-        NSArray<NSNumber *> *visibleIndexPaths = [tableView.indexPathsForVisibleRows valueForKey:@"section"];
-        if (![visibleIndexPaths containsObject:@(indexPath.section)]) {
-            [section removeFromParentViewController];
-        }
-    }
-}
+//- (void)tableView:(UITableView *)tableView
+//    didEndDisplayingCell:(UITableViewCell *)cell
+//       forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+//    TableViewRow *row = [section getRowAtIndex:indexPath.row];
+//    if (row) {
+//        [row didEndDisplayingCell:(TableViewCell *)cell inSection:section inDataSource:self];
+//        [row removeFromParentViewController];
+//
+//        NSArray<NSNumber *> *visibleIndexPaths = [tableView.indexPathsForVisibleRows valueForKey:@"section"];
+//        if (![visibleIndexPaths containsObject:@(indexPath.section)]) {
+//            [section removeFromParentViewController];
+//        }
+//    }
+//}
 
 #pragma mark Header/Footer
 
@@ -268,9 +283,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 
     for (int index = (int)[sections count]; index < self.numberOfSections; index++) {
-        TableViewSection *section = [self createSectionAtIndex:index];
-        [section setIndex:index];
-        [section setupRows];
+        TableViewSection *section = [self _createSectionAtIndex:index];
         [sections addObject:section ?: [NSNull null]];
     }
 
@@ -299,16 +312,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return [section getRowAtIndex:indexPath.row];
 }
 
-- (void)updateCellChildViewControllerAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewCell *cell = (TableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-    if (row) {
-        [row willDisplayCell:cell inSection:section inDataSource:self];
-        [self.tableViewController addChildViewController:section];
-        [self.tableViewController addChildViewController:row];
-    }
-}
+//- (void)updateChildViewControllerForCell:(TableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+//    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
+//    TableViewRow *row = [section getRowAtIndex:indexPath.row];
+//    if (row) {
+//        if (cell) {
+//            [row willDisplayCell:cell inSection:section inDataSource:self];
+//        }
+//        [self.tableViewController addChildViewController:section];
+//        [section addChildViewController:row];
+//    }
+//}
 
 #pragma mark - Static
 

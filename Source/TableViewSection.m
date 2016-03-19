@@ -33,9 +33,18 @@
     return 0;
 }
 
-- (TableViewRow *)createRowAtIndex:(NSUInteger)row {
+- (TableViewRow *)createRowAtIndex:(NSUInteger)index {
     NSAssert(NO, @"TableViewSection: createRowAtIndex: need to be implemented by subclass");
     return nil;
+}
+
+- (TableViewRow *)_createRowAtIndex:(NSUInteger)index {
+    TableViewRow *row = [self createRowAtIndex:index];
+    if (row) {
+        [row setIndex:index];
+        [self addChildViewController:row];
+    }
+    return row;
 }
 
 #pragma mark - Header/Footer
@@ -61,8 +70,7 @@
 - (void)setupRows {
     NSMutableArray *rows = [NSMutableArray array];
     for (int index = 0; index < self.numberOfRows; index++) {
-        TableViewRow *row = [self createRowAtIndex:index];
-        [row setIndex:index];
+        TableViewRow *row = [self _createRowAtIndex:index];
         [rows addObject:row ?: [NSNull null]];
     }
     [self setRows:rows];
@@ -109,9 +117,7 @@
     NSMutableArray<NSIndexPath *> *indexPaths = [[NSMutableArray alloc] init];
     for (NSNumber *number in validIndexes) {
         NSInteger index = [number integerValue];
-        TableViewRow *row = [self createRowAtIndex:index];
-        [row setIndex:index];
-
+        TableViewRow *row = [self _createRowAtIndex:index];
         NSMutableArray *rows = [self.rows mutableCopy];
         [rows replaceObjectAtIndex:index withObject:row ?: [NSNull null]];
         [self setRows:rows];
