@@ -61,6 +61,7 @@ static NSString *const kEmptyCellReuseIdentifier;
     if (self.isLoadingIndicatorEnabled) {
         [self.loadingSection setLoading:_loading];
     }
+    [self.tableView setUserInteractionEnabled:!_loading];
     [self setupDataAndReuseExistingSections:reuse];
 }
 
