@@ -278,7 +278,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     } else {
         [self.sections enumerateObjectsUsingBlock:^(TableViewSection *section, NSUInteger idx, BOOL *stop) {
-          [section removeFromParentViewController];
+          if ([section respondsToSelector:@selector(removeFromParentViewController)]) {
+              [section removeFromParentViewController];
+          }
         }];
     }
 

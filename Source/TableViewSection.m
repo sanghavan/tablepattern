@@ -31,7 +31,9 @@
 - (void)removeFromParentViewController {
     [super removeFromParentViewController];
     [self.rows enumerateObjectsUsingBlock:^(TableViewRow *row, NSUInteger idx, BOOL *stop) {
-      [row removeFromParentViewController];
+      if ([row respondsToSelector:@selector(removeFromParentViewController)]) {
+          [row removeFromParentViewController];
+      }
     }];
 }
 
