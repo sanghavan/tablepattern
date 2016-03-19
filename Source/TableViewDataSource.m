@@ -53,16 +53,15 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)setLoading:(BOOL)loading {
-    [self setLoading:loading andReuseExistingSections:NO];
+    [self setLoading:loading andReuseExistingSections:NO forceReload:NO];
 }
 
-- (void)setLoading:(BOOL)loading andReuseExistingSections:(BOOL)reuse {
+- (void)setLoading:(BOOL)loading andReuseExistingSections:(BOOL)reuse forceReload:(BOOL)forceReload {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
         [self.loadingSection setLoading:_loading];
     }
-    [self.tableView setUserInteractionEnabled:!_loading];
-    [self setupDataAndReuseExistingSections:reuse];
+    [self setupDataAndReuseExistingSections:reuse forceReload:forceReload];
 }
 
 - (BOOL)isPaginationEnabled {
@@ -77,7 +76,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 }
 
 - (void)refreshDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
-    [self setupDataAndReuseExistingSections:NO force:YES];
+    [self setupDataAndReuseExistingSections:NO forceReload:YES];
     if (completion) {
         completion();
     }
@@ -105,12 +104,12 @@ static NSString *const kEmptyCellReuseIdentifier;
 
     BOOL initialLoad = self.paginationPage == kPaginationPageDefault;
 
-    [self setLoading:YES andReuseExistingSections:!initialLoad];
+    [self setLoading:YES andReuseExistingSections:!initialLoad forceReload:NO];
     [self setPaginationPage:self.paginationPage + 1];
     [self fetchDataOnPage:self.paginationPage
                 withLimit:self.paginationLimit
              onCompletion:^(BOOL hasMore) {
-               [weakSelf setLoading:NO andReuseExistingSections:!initialLoad];
+               [weakSelf setLoading:NO andReuseExistingSections:!initialLoad forceReload:initialLoad];
                if (!hasMore) {
                    [weakSelf setPaginationPage:kPaginationPageDisabled];
                }
@@ -120,27 +119,23 @@ static NSString *const kEmptyCellReuseIdentifier;
              }];
 }
 
-- (void)setupDataAndReuseExistingSections:(BOOL)reuse {
-    [self setupDataAndReuseExistingSections:reuse force:NO];
-}
-
-- (void)setupDataAndReuseExistingSections:(BOOL)reuse force:(BOOL)force {
+- (void)setupDataAndReuseExistingSections:(BOOL)reuse forceReload:(BOOL)forceReload {
     // NOTE(materik):
     // * don't want to refresh the table when resetting the view and there are sections in it...
-    if (!force && [self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
+    if (!forceReload && [self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
         return;
     }
 
     [self setupSectionsAndReuseExistingSections:reuse];
-    [self reloadTableView];
+    [self.tableView reloadData];
 }
 
-- (void)reloadTableView {
-    [self.tableView reloadData];
-    //    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
-    //        [self updateChildViewControllerForCell:nil atIndexPath:indexPath];
-    //    }
-}
+//- (void)reloadTableView {
+//    [self.tableView reloadData];
+//    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
+//        [self updateChildViewControllerForCell:nil atIndexPath:indexPath];
+//    }
+//}
 
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
     NSLog(@"WARNING: TableViewDataSource: fetchDataOnCompletion: should be implemented by subclass");
@@ -225,7 +220,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == (self.numberOfSections - self.paginationLoadNextPageOffset.section) &&
         indexPath.row == (section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row) &&
         self.isPaginationEnabled && !self.isLoading) {
-        [self loadNextPageOnCompletion:nil];
+        [self performSelector:@selector(loadNextPageOnCompletion:) withObject:nil afterDelay:0.1f];
     }
 }
 
@@ -281,6 +276,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         if (self.isLoadingIndicatorEnabled) {
             [sections removeLastObject];
         }
+    } else {
+        [self.sections enumerateObjectsUsingBlock:^(TableViewSection *section, NSUInteger idx, BOOL *stop) {
+          [section removeFromParentViewController];
+        }];
     }
 
     for (int index = (int)[sections count]; index < self.numberOfSections; index++) {

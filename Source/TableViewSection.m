@@ -28,6 +28,13 @@
     return self;
 }
 
+- (void)removeFromParentViewController {
+    [super removeFromParentViewController];
+    [self.rows enumerateObjectsUsingBlock:^(TableViewRow *row, NSUInteger idx, BOOL *stop) {
+      [row removeFromParentViewController];
+    }];
+}
+
 - (NSUInteger)numberOfRows {
     NSAssert(NO, @"TableViewSection: numberOfRows: need to be implemented by subclass");
     return 0;
@@ -92,9 +99,15 @@
 }
 
 - (void)reloadInDataSource:(TableViewDataSource *)dataSource withRowAnimation:(UITableViewRowAnimation)animation {
+    if (dataSource.isLoading) {
+        return;
+    }
+
+    [dataSource.tableView beginUpdates];
     [self setupRows];
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:self.index];
     [dataSource.tableView reloadSections:indexSet withRowAnimation:animation];
+    [dataSource.tableView endUpdates];
 }
 
 - (void)reloadRowAtIndex:(NSUInteger)index
@@ -106,6 +119,10 @@
 - (void)reloadRowsAtIndexes:(NSArray<NSNumber *> *)indexes
                inDataSource:(TableViewDataSource *)dataSource
            withRowAnimation:(UITableViewRowAnimation)animation {
+    if (dataSource.isLoading) {
+        return;
+    }
+
     NSMutableArray<NSNumber *> *validIndexes = [[NSMutableArray alloc] init];
     for (NSNumber *number in indexes) {
         NSInteger index = [number integerValue];
@@ -127,7 +144,9 @@
     }
 
     if ([indexPaths count]) {
+        [dataSource.tableView beginUpdates];
         [dataSource.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
+        [dataSource.tableView endUpdates];
     }
 }
 
