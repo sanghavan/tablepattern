@@ -25,6 +25,8 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 @property(nonatomic, strong) NSArray<TableViewSection *> *sections;
 @property(nonatomic, readonly) LoadingTableViewSection *loadingSection;
+@property(nonatomic, strong) NSIndexPath *lastLoadedPageIndexPath;
+@property(nonatomic, readonly) NSIndexPath *nextPageIndexPath;
 
 @end
 
@@ -43,6 +45,14 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (UITableView *)tableView {
     return self.tableViewController.tableView;
+}
+
+- (NSIndexPath *)nextPageIndexPath {
+    TableViewSection *section = [self getSectionAtIndex:self.numberOfSections - 1];
+    NSIndexPath *indexPath =
+        [NSIndexPath indexPathForRow:(section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row)
+                           inSection:(self.numberOfSections - self.paginationLoadNextPageOffset.section)];
+    return [indexPath isEqual:self.lastLoadedPageIndexPath] ? nil : indexPath;
 }
 
 - (LoadingTableViewSection *)loadingSection {
@@ -130,13 +140,6 @@ static NSString *const kEmptyCellReuseIdentifier;
     [self.tableView reloadData];
 }
 
-//- (void)reloadTableView {
-//    [self.tableView reloadData];
-//    for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows]) {
-//        [self updateChildViewControllerForCell:nil atIndexPath:indexPath];
-//    }
-//}
-
 - (void)fetchDataOnCompletion:(TableViewDataSourceLoadDataCompletion)completion {
     NSLog(@"WARNING: TableViewDataSource: fetchDataOnCompletion: should be implemented by subclass");
     completion();
@@ -214,31 +217,11 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    [self updateChildViewControllerForCell:(TableViewCell *)cell atIndexPath:indexPath];
-
-    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-    if (indexPath.section == (self.numberOfSections - self.paginationLoadNextPageOffset.section) &&
-        indexPath.row == (section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row) &&
-        self.isPaginationEnabled && !self.isLoading) {
+    if (self.isPaginationEnabled && !self.isLoading && [indexPath isEqual:self.nextPageIndexPath]) {
+        [self setLastLoadedPageIndexPath:indexPath];
         [self performSelector:@selector(loadNextPageOnCompletion:) withObject:nil afterDelay:0.1f];
     }
 }
-
-//- (void)tableView:(UITableView *)tableView
-//    didEndDisplayingCell:(UITableViewCell *)cell
-//       forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-//    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-//    if (row) {
-//        [row didEndDisplayingCell:(TableViewCell *)cell inSection:section inDataSource:self];
-//        [row removeFromParentViewController];
-//
-//        NSArray<NSNumber *> *visibleIndexPaths = [tableView.indexPathsForVisibleRows valueForKey:@"section"];
-//        if (![visibleIndexPaths containsObject:@(indexPath.section)]) {
-//            [section removeFromParentViewController];
-//        }
-//    }
-//}
 
 #pragma mark Header/Footer
 
@@ -313,18 +296,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewSection *section = [self getSectionAtIndex:indexPath.section];
     return [section getRowAtIndex:indexPath.row];
 }
-
-//- (void)updateChildViewControllerForCell:(TableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    TableViewSection *section = [self getSectionAtIndex:indexPath.section];
-//    TableViewRow *row = [section getRowAtIndex:indexPath.row];
-//    if (row) {
-//        if (cell) {
-//            [row willDisplayCell:cell inSection:section inDataSource:self];
-//        }
-//        [self.tableViewController addChildViewController:section];
-//        [section addChildViewController:row];
-//    }
-//}
 
 #pragma mark - Static
 
