@@ -25,7 +25,6 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 @property(nonatomic, strong) NSArray<TableViewSection *> *sections;
 @property(nonatomic, readonly) LoadingTableViewSection *loadingSection;
-@property(nonatomic, strong) NSIndexPath *lastLoadedPageIndexPath;
 @property(nonatomic, readonly) NSIndexPath *nextPageIndexPath;
 
 @end
@@ -51,8 +50,8 @@ static NSString *const kEmptyCellReuseIdentifier;
     TableViewSection *section = [self getSectionAtIndex:self.numberOfSections - 1];
     NSIndexPath *indexPath =
         [NSIndexPath indexPathForRow:(section.numberOfRows - 1 - self.paginationLoadNextPageOffset.row)
-                           inSection:(self.numberOfSections - self.paginationLoadNextPageOffset.section)];
-    return [indexPath isEqual:self.lastLoadedPageIndexPath] ? nil : indexPath;
+                           inSection:(self.numberOfSections - 1 - self.paginationLoadNextPageOffset.section)];
+    return indexPath;
 }
 
 - (LoadingTableViewSection *)loadingSection {
@@ -69,7 +68,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setLoading:(BOOL)loading andReuseExistingSections:(BOOL)reuse forceReload:(BOOL)forceReload {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
-        [self.loadingSection setLoading:_loading];
+        [self.loadingSection setLoading:self.paginationPage != kPaginationPageDisabled];
     }
     [self setupDataAndReuseExistingSections:reuse forceReload:forceReload];
 }
@@ -119,10 +118,10 @@ static NSString *const kEmptyCellReuseIdentifier;
     [self fetchDataOnPage:self.paginationPage
                 withLimit:self.paginationLimit
              onCompletion:^(BOOL hasMore) {
-               [weakSelf setLoading:NO andReuseExistingSections:!initialLoad forceReload:initialLoad];
                if (!hasMore) {
                    [weakSelf setPaginationPage:kPaginationPageDisabled];
                }
+               [weakSelf setLoading:NO andReuseExistingSections:!initialLoad forceReload:initialLoad];
                if (completion) {
                    completion();
                }
@@ -132,7 +131,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setupDataAndReuseExistingSections:(BOOL)reuse forceReload:(BOOL)forceReload {
     // NOTE(materik):
     // * don't want to refresh the table when resetting the view and there are sections in it...
-    if (!forceReload && [self.sections count] > [self numberOfSectionsInTableView:self.tableView]) {
+    if (!forceReload && [self.sections count] >= [self numberOfSectionsInTableView:self.tableView]) {
         return;
     }
 
@@ -218,7 +217,7 @@ static NSString *const kEmptyCellReuseIdentifier;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isPaginationEnabled && !self.isLoading && [indexPath isEqual:self.nextPageIndexPath]) {
-        [self setLastLoadedPageIndexPath:indexPath];
+        _loading = YES;
         [self performSelector:@selector(loadNextPageOnCompletion:) withObject:nil afterDelay:0.1f];
     }
 }
