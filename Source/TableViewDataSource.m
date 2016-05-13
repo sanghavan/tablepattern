@@ -68,7 +68,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 - (void)setLoading:(BOOL)loading andReuseExistingSections:(BOOL)reuse forceReload:(BOOL)forceReload {
     _loading = loading;
     if (self.isLoadingIndicatorEnabled) {
-        [self.loadingSection setLoading:self.paginationPage != kPaginationPageDisabled];
+        [self.loadingSection setLoading:(!_enablePagination && loading) || self.isPaginationEnabled];
     }
     [self setupDataAndReuseExistingSections:reuse forceReload:forceReload];
 }
