@@ -83,6 +83,7 @@ static NSString *const kEmptyCellReuseIdentifier;
 
 - (void)resetAndLoadDataOnCompletion:(TableViewDataSourceReloadDataCompletion)completion {
     [self setPaginationPage:_enablePagination ? kPaginationPageDefault : kPaginationPageDisabled];
+    [self setupSectionsAndReuseExistingSections:NO];
     [self loadDataOnCompletion:completion];
 }
 
